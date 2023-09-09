@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public Transform movePoint;
     public float moveSpeed = 7f;
 
+    public int XCoordinate = 0;
+    public int YCoordinate = 0;
     private bool isHoldingKey = false;
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        XCoordinate = Mathf.FloorToInt(transform.position.x);
+        YCoordinate = Mathf.FloorToInt(transform.position.y);
         HandleMovement();
     }
 
@@ -30,7 +34,15 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
             {
                 RaycastHit2D hit = Physics2D.Linecast(new Vector2(movePoint.position.x, movePoint.position.y), new Vector2(movePoint.position.x + Input.GetAxisRaw("Horizontal"), movePoint.position.y));
-                if (hit.transform) return;
+                if (hit.transform)
+                {
+                    if (hit.transform.gameObject.tag == "Enemy")
+                    {
+                        //TODO : Frapper fort
+                    }
+                    return;
+                }
+
                 if (isHoldingKey) return;
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
                 GameManager.Instance.StartNextTurnAndPerformSideEffects();
