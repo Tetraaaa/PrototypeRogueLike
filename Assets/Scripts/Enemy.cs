@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         this.currentHp -= damage;
+        GameManager.Instance.PlayHitSound();
+        GetComponent<ParticleSystem>().Play();
+
         if (this.currentHp <= 0) Destroy(gameObject); 
     }
 }
