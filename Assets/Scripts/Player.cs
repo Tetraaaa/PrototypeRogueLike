@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
         {
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
             {
+                RaycastHit2D hit = Physics2D.Linecast(new Vector2(movePoint.position.x, movePoint.position.y), new Vector2(movePoint.position.x + Input.GetAxisRaw("Horizontal"), movePoint.position.y));
+                if (hit.transform) return;
                 if (isHoldingKey) return;
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
                 GameManager.Instance.StartNextTurnAndPerformSideEffects();
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
             }
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
             {
+                RaycastHit2D hit = Physics2D.Linecast(new Vector2(movePoint.position.x, movePoint.position.y), new Vector2(movePoint.position.x, movePoint.position.y + Input.GetAxisRaw("Vertical")));
+                if (hit.transform) return;
                 if (isHoldingKey) return;
                 movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
                 GameManager.Instance.StartNextTurnAndPerformSideEffects();
@@ -47,4 +51,5 @@ public class Player : MonoBehaviour
             }
         }
     }
+
 }

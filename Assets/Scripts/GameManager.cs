@@ -20,7 +20,6 @@ public class GameManager : Singleton<GameManager>
     public void StartNextTurnAndPerformSideEffects()
     {
         currentTurn++;
-        Debug.Log(currentTurn);
     }
 
 }
