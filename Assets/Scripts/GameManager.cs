@@ -6,6 +6,8 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject EnemyPrefab;
     private int currentTurn = 0;
+    private int currentWave = 1;
+    private int enemiesThisRound = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +33,11 @@ public class GameManager : Singleton<GameManager>
 
     public void SpawnSomeEnemies()
     {
+        if (enemiesThisRound <= 0) return;
         int xPosition = Random.Range(-GameSettings.MAP_SIZE_IN_TILES/2, GameSettings.MAP_SIZE_IN_TILES/2);
         int yPosition = Random.Range(-GameSettings.MAP_SIZE_IN_TILES/2, GameSettings.MAP_SIZE_IN_TILES/2);
         Instantiate(EnemyPrefab, new Vector3(xPosition+.5f,yPosition+.5f,0), Quaternion.identity, null);
+        enemiesThisRound--;
     }
 
 }
