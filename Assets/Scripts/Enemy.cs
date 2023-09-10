@@ -1,25 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
+    public Transform movePoint;
+    public float moveSpeed = 7f;
+
     private int maxHP = 20;
     private int currentHp;
     private int attack = 1;
     public List<string> logs = new List<string>();
     private Vector2? playerPosition;
     private Color damageColor = new Color(255, 255, 255);
+    private Seeker seeker;
     // Start is called before the first frame update
     void Start()
     {
+        movePoint.parent = null;
         currentHp = maxHP;
+        seeker = GetComponent<Seeker>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(new Vector2(transform.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y) + Vector2.left);
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     public void PlayTurn()
@@ -31,6 +38,24 @@ public class Enemy : MonoBehaviour
         else
         {
             CheckIfPlayerIsInContact();
+            WalkTowardsPlayer();
+        }
+    }
+
+    public void WalkTowardsPlayer()
+    {
+        if (playerPosition != null) return;
+        Path p = seeker.StartPath(transform.position, GameManager.Instance.player.transform.position);
+        p.BlockUntilCalculated();
+        if(p.error)
+        {
+            logs.Add("no player ?");
+        }
+        else
+        {
+            logs.Add(p.vectorPath[0].x + ";" + p.vectorPath[0].y);
+            logs.Add(p.vectorPath[1].x + ";" + p.vectorPath[1].y);
+            movePoint.position = p.vectorPath[1];
         }
     }
 
@@ -60,7 +85,10 @@ public class Enemy : MonoBehaviour
             playerPosition = currentPosition + Vector2.down;
         }
 
-        if (playerPosition != null) logs.Add("il y a un joueur a mon cac wtf ?????????");
+        if (playerPosition != null)
+        {
+            logs.Add("il y a un joueur a mon cac wtf ?????????");
+        } 
     }
 
     public void HitPlayerIfStillThere()

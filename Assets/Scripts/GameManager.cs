@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     private int enemiesThisRound = 15;
     public AudioClip hitSound;
     public bool isEnemyTurn = false;
+    public Player player;
 
     // Start is called before the first frame update
     void Start()
