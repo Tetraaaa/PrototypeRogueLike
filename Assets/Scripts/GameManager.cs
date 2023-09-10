@@ -6,6 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject EnemyPrefab;
     private AudioSource audioSource;
+    public FloatingDamage FloatingDamagePrefab;
     private int currentTurn = 0;
     private int currentWave = 1;
     private int enemiesThisRound = 15;
@@ -60,6 +61,13 @@ public class GameManager : Singleton<GameManager>
     public void PlayHitSound()
     {
         audioSource.PlayOneShot(hitSound);
+    }
+
+    public void ShowFloatingDamage(Vector3 position, int damage, Color color)
+    {
+        FloatingDamage floatingDamage = Instantiate(FloatingDamagePrefab, position, Quaternion.identity, null);
+        floatingDamage.SetText(damage.ToString(), color);
+        floatingDamage.gameObject.SetActive(true);
     }
 
 }

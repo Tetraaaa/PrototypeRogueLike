@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private int attack = 1;
     public List<string> logs = new List<string>();
     private Vector2? playerPosition;
+    private Color damageColor = new Color(255, 255, 255);
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +83,9 @@ public class Enemy : MonoBehaviour
     {
         this.currentHp -= damage;
         GameManager.Instance.PlayHitSound();
+        GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         GetComponent<ParticleSystem>().Play();
+        
 
         if (this.currentHp <= 0) Destroy(gameObject); 
     }

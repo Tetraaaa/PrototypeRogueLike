@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private int maxHP = 20;
     private int currentHp;
     private bool turnEnded = false;
+    private Color damageColor = new Color(240, 0, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +92,7 @@ public class Player : MonoBehaviour
     {
         currentHp -= damage;
         GameManager.Instance.PlayHitSound();
+        GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         if (currentHp <= 0) Destroy(gameObject);
     }
 
