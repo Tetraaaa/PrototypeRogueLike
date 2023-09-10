@@ -11,11 +11,15 @@ public class Player : MonoBehaviour
     public int YCoordinate = 0;
     private bool isHoldingKey = false;
     public int attack = 20;
+    private int maxHP = 20;
+    private int currentHp;
+    private bool turnEnded = false;
 
     // Start is called before the first frame update
     void Start()
     {
         movePoint.parent = null;
+        currentHp = maxHP;
     }
 
     // Update is called once per frame
@@ -23,12 +27,20 @@ public class Player : MonoBehaviour
     {
         XCoordinate = Mathf.FloorToInt(transform.position.x);
         YCoordinate = Mathf.FloorToInt(transform.position.y);
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+        if(turnEnded && Vector3.Distance(transform.position, movePoint.position) == 0)
+        {
+            GameManager.Instance.StartNextTurnAndPerformSideEffects();
+            turnEnded = false;
+        }
         HandleMovement();
     }
 
     void HandleMovement()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+        if (turnEnded) return;
 
         if (Vector3.Distance(transform.position, movePoint.position) <= 0.05f)
         {
@@ -42,13 +54,13 @@ public class Player : MonoBehaviour
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
                         hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack);
-                        GameManager.Instance.StartNextTurnAndPerformSideEffects();
+                        turnEnded = true;
                     }
                     return;
                 }
 
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
-                GameManager.Instance.StartNextTurnAndPerformSideEffects();
+                turnEnded = true;
             }
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
             {
@@ -60,19 +72,26 @@ public class Player : MonoBehaviour
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
                         hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack);
-                        GameManager.Instance.StartNextTurnAndPerformSideEffects();
+                        turnEnded = true;
                     }
                     return;
                 }
 
                 movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
-                GameManager.Instance.StartNextTurnAndPerformSideEffects();
+                turnEnded = true;
             }
             else
             {
                 isHoldingKey = false;
             }
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHp -= damage;
+        GameManager.Instance.PlayHitSound();
+        if (currentHp <= 0) Destroy(gameObject);
     }
 
 }

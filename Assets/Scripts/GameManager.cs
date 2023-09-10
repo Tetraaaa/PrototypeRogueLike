@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
     private int currentWave = 1;
     private int enemiesThisRound = 15;
     public AudioClip hitSound;
+    public bool isEnemyTurn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +27,16 @@ public class GameManager : Singleton<GameManager>
     public void StartNextTurnAndPerformSideEffects()
     {
         currentTurn++;
+
+        PlayEnemiesTurn();
+
         bool shouldSpawnEnemiesThisTurn = currentTurn % GameSettings.DEFAULT_DELAY_BETWEEN_ENEMY_SPAWNS_IN_TURNS == 0;
         if (shouldSpawnEnemiesThisTurn)
         {
             SpawnSomeEnemies();
         }
+
+        isEnemyTurn = false;
 
     }
 
@@ -41,6 +47,14 @@ public class GameManager : Singleton<GameManager>
         int yPosition = Random.Range(-GameSettings.MAP_SIZE_IN_TILES/2, GameSettings.MAP_SIZE_IN_TILES/2);
         Instantiate(EnemyPrefab, new Vector3(xPosition+.5f,yPosition+.5f,0), Quaternion.identity, null);
         enemiesThisRound--;
+    }
+
+    public void PlayEnemiesTurn()
+    {
+        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemy.GetComponent<Enemy>().HitPlayerIfPossible();
+        }
     }
 
     public void PlayHitSound()
