@@ -53,7 +53,7 @@ public class GameManager : Singleton<GameManager>
     {
         foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            enemy.GetComponent<Enemy>().HitPlayerIfPossible();
+            enemy.GetComponent<Enemy>().PlayTurn();
         }
     }
 
