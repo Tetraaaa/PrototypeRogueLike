@@ -196,7 +196,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -41288,6 +41288,9 @@ MonoBehaviour:
   XCoordinate: 0
   YCoordinate: 0
   attack: 10
+  xpNeededForLevelUp: 50
+  level: 1
+  hasThunderFeet: 0
 --- !u!212 &323529086
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -43593,7 +43596,7 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 5928083958422214388, guid: 4f670e07ed0172843a57bd476e1f20d0, type: 3}
   FloatingDamagePrefab: {fileID: 7947544638735769484, guid: 90b04232210a8f74db7dd2bfc7e09a49, type: 3}
   hitSound: {fileID: 8300000, guid: e218765cbd13e6b42acbfcd295e52cd7, type: 3}
-  isEnemyTurn: 0
+  ThunderFeetAnimation: {fileID: 8083041458848918675, guid: 4b980f1a668d72d49a91d89613f8a2cb, type: 3}
   player: {fileID: 323529085}
 --- !u!4 &1314569960
 Transform:

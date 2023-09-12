@@ -11,7 +11,8 @@ public class GameManager : Singleton<GameManager>
     private int currentWave = 1;
     private int enemiesThisRound = 15;
     public AudioClip hitSound;
-    public bool isEnemyTurn = false;
+    private bool isEnemyTurn = false;
+    public GameObject ThunderFeetAnimation;
     public Player player;
 
     // Start is called before the first frame update
@@ -69,6 +70,11 @@ public class GameManager : Singleton<GameManager>
         FloatingDamage floatingDamage = Instantiate(FloatingDamagePrefab, position, Quaternion.identity, null);
         floatingDamage.SetText(damage.ToString(), color);
         floatingDamage.gameObject.SetActive(true);
+    }
+
+    public void ChooseNewPerks()
+    {
+
     }
 
 }

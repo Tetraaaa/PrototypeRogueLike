@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     private int currentHp;
     private bool turnEnded = false;
     private Color damageColor = new Color(240, 0, 0);
+    public int xpNeededForLevelUp = 50;
+    public int level = 1;
+    public bool hasThunderFeet = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -54,13 +58,15 @@ public class Player : MonoBehaviour
                 {
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
-                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack);
+                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
                         turnEnded = true;
                     }
                     return;
                 }
 
+                if (hasThunderFeet) ApplyThunderFeet();
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+
                 turnEnded = true;
             }
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
@@ -72,12 +78,13 @@ public class Player : MonoBehaviour
                 {
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
-                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack);
+                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
                         turnEnded = true;
                     }
                     return;
                 }
 
+                if (hasThunderFeet) ApplyThunderFeet();
                 movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
                 turnEnded = true;
             }
@@ -94,6 +101,55 @@ public class Player : MonoBehaviour
         GameManager.Instance.PlayHitSound();
         GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         if (currentHp <= 0) Destroy(gameObject);
+    }
+
+    public void GainExp(int xp)
+    {
+        this.xpNeededForLevelUp -= xp;
+        if(xpNeededForLevelUp <= 0)
+        {
+            level++;
+            xpNeededForLevelUp += 50*level;
+            GameManager.Instance.ChooseNewPerks();
+        }
+    }
+
+    public void ApplyThunderFeet()
+    {
+        Vector2 currentPosition = movePoint.position;
+
+        RaycastHit2D leftTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.left);
+        RaycastHit2D rightTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.right);
+        RaycastHit2D upTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.up);
+        RaycastHit2D downTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.down);
+
+        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.left, Quaternion.identity, transform);
+        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.right, Quaternion.identity, transform);
+        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.up, Quaternion.identity, transform);
+        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.down, Quaternion.identity, transform);
+
+        if (leftTarget.transform && leftTarget.transform.gameObject.tag == "Enemy")
+        {
+            leftTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
+        }
+        if (rightTarget.transform && rightTarget.transform.gameObject.tag == "Enemy")
+        {
+            rightTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
+        }
+        if (upTarget.transform && upTarget.transform.gameObject.tag == "Enemy")
+        {
+            upTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
+        }
+        if (downTarget.transform && downTarget.transform.gameObject.tag == "Enemy")
+        {
+            downTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
+        }
+
+    }
+
+    public void AddThunderFeetPerk()
+    {
+        hasThunderFeet = true;
     }
 
 }

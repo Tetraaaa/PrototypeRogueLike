@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
     public void WalkTowardsPlayer()
     {
         if (playerPosition != null) return;
+        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
         Path p = seeker.StartPath(transform.position, GameManager.Instance.player.transform.position);
         p.BlockUntilCalculated();
         if(p.error)
@@ -53,8 +54,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            logs.Add(p.vectorPath[0].x + ";" + p.vectorPath[0].y);
-            logs.Add(p.vectorPath[1].x + ";" + p.vectorPath[1].y);
+            bool goingToCrashIntoEachOther = Physics2D.Linecast(currentPosition, p.vectorPath[1]).transform != null;
+            if (goingToCrashIntoEachOther)
+            {
+                Debug.Log("wow y'a déjà quelqu'un ici !!");
+                return;
+            }
             movePoint.position = p.vectorPath[1];
         }
     }
@@ -107,14 +112,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Player attacker)
     {
         this.currentHp -= damage;
         GameManager.Instance.PlayHitSound();
         GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         GetComponent<ParticleSystem>().Play();
-        
 
-        if (this.currentHp <= 0) Destroy(gameObject); 
+
+        if (this.currentHp <= 0)
+        {
+            Destroy(gameObject);
+            attacker.GainExp(10);
+        }
     }
 }
