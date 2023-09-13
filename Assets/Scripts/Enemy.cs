@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     private Vector2? playerPosition;
     private Color damageColor = new Color(255, 255, 255);
     private Seeker seeker;
+    public bool isBurning;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +27,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isBurning) GetComponent<SpriteRenderer>().color = new Color32(246, 152, 85, 255);
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     public void PlayTurn()
     {
+        if (isBurning) TakeDamage(1, GameManager.Instance.player);
         if(playerPosition != null)
         {
             HitPlayerIfStillThere();

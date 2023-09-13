@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public int xpNeededForLevelUp = 50;
     public int level = 1;
     public bool hasThunderFeet = false;
+    public bool hasFireFists = false;
 
 
     // Start is called before the first frame update
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
+                        if (hasFireFists) hit.transform.gameObject.GetComponent<Enemy>().isBurning = true;
                         hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
                         turnEnded = true;
                     }
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
                 {
                     if (hit.transform.gameObject.tag == "Enemy")
                     {
+                        if (hasFireFists) hit.transform.gameObject.GetComponent<Enemy>().isBurning = true;
                         hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
                         turnEnded = true;
                     }
