@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public int level = 1;
     public bool hasThunderFeet = false;
     public bool hasFireFists = false;
+    public bool hasKnockback = false;
+    public int knockbackHitCounter = 0;
 
 
     // Start is called before the first frame update
@@ -37,7 +39,7 @@ public class Player : MonoBehaviour
 
         if(turnEnded && Vector3.Distance(transform.position, movePoint.position) == 0)
         {
-            GameManager.Instance.StartNextTurnAndPerformSideEffects();
+            WaveManager.Instance.StartNextTurnAndPerformSideEffects();
             turnEnded = false;
         }
         HandleMovement();

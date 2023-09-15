@@ -47,6 +47,7 @@ public class Enemy : MonoBehaviour
 
     public void WalkTowardsPlayer()
     {
+        return;
         if (playerPosition != null) return;
         Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
         Path p = seeker.StartPath(transform.position, GameManager.Instance.player.transform.position);
