@@ -14,17 +14,15 @@ public static class PathFinder
 
     public static List<GameTile> FindPath(GameTile startTile, GameTile endTile)
     {
+        endTile.ignoreAllCollisions = true;
         Tiles.ForEach(x => x.Parent = null);
         List<GameTile> result = ProcessPath(startTile, endTile);
+        endTile.ignoreAllCollisions = false;
         return result;
     }
 
     private static List<GameTile> ProcessPath(GameTile startTile, GameTile endTile)
     {
-        // Vérification des tuiles de départ et d'arrivée
-        if (!startTile.IsWalkable() || !endTile.IsWalkable())
-            return null;
-
         Queue<GameTile> queue = new Queue<GameTile>();
         HashSet<GameTile> visited = new HashSet<GameTile>();
 
@@ -41,7 +39,9 @@ public static class PathFinder
             foreach (var neighbor in GetNeighbors(currentTile))
             {
                 if (!neighbor.IsWalkable() || visited.Contains(neighbor))
+                {
                     continue;
+                }
 
                 neighbor.Parent = currentTile;
                 queue.Enqueue(neighbor);

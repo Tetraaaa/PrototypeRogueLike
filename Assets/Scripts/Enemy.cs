@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public Transform movePoint;
     public float moveSpeed = 7f;
 
+
     private int maxHP = 20;
     private int currentHp;
     private int attack = 1;
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour
     private Color damageColor = new Color(255, 255, 255);
     private Seeker seeker;
     public bool isBurning;
+    public GameTile CurrentTile = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +35,7 @@ public class Enemy : MonoBehaviour
 
     public void PlayTurn()
     {
-        if (isBurning) TakeDamage(1, GameManager.Instance.player);
+        if (isBurning) TakeDamage(1, GameManager.Instance.player.GetComponent<Player>());
         if(playerPosition != null)
         {
             HitPlayerIfStillThere();
@@ -47,25 +49,13 @@ public class Enemy : MonoBehaviour
 
     public void WalkTowardsPlayer()
     {
-        return;
         if (playerPosition != null) return;
-        Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
-        Path p = seeker.StartPath(transform.position, GameManager.Instance.player.transform.position);
-        p.BlockUntilCalculated();
-        if(p.error)
-        {
-            logs.Add("no player ?");
-        }
-        else
-        {
-            bool goingToCrashIntoEachOther = Physics2D.Linecast(currentPosition, p.vectorPath[1]).transform != null;
-            if (goingToCrashIntoEachOther)
-            {
-                Debug.Log("wow y'a déjà quelqu'un ici !!");
-                return;
-            }
-            movePoint.position = p.vectorPath[1];
-        }
+        List<GameTile> path = PathFinder.FindPath(CurrentTile, GameManager.Instance.GameBoard.Get(51,-15));
+
+        //Debug.Log("Recherche d'un chemin entre " + CurrentTile + " et " + GameManager.Instance.player.GetComponent<Player>().CurrentTile);
+        if (path == null) return;
+
+        movePoint.position = path[0].worldPos;
     }
 
     public void CheckIfPlayerIsInContact()

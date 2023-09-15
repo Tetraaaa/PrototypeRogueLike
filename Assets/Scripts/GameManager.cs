@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     public FloatingDamage FloatingDamagePrefab;
     public AudioClip hitSound;
     public GameObject ThunderFeetAnimation;
-    public Player player;
+    public GameObject player;
     public GameBoard GameBoard;
     public Tilemap tilemap;
 
@@ -17,10 +17,12 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         GameBoard = new GameBoard(tilemap);
+        SetPlayerStartingPos();
         PathFinder.Init(GameBoard.board);
 
-        //var path = PathFinder.FindPath(GameBoard.Get(7, 3), GameBoard.Get(11, 3));
-        //path.ForEach(t => Debug.Log(t.worldPos));
+        //var path = PathFinder.FindPath(GameBoard.Get(34, -22), GameBoard.Get(29,-28));
+        //Debug.Log(path);
+        //path.ForEach(p => Debug.Log(p.worldPos));
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -31,9 +33,12 @@ public class GameManager : Singleton<GameManager>
         
     }
 
-
-
-
+    public void SetPlayerStartingPos()
+    {
+        var playerTile = GameBoard.Get(player.transform.position);
+        playerTile.entity = player;
+        player.GetComponent<Player>().CurrentTile = playerTile;
+    }
 
 
 

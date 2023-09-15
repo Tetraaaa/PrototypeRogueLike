@@ -41354,7 +41354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 323529084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.5, y: -31.5, z: 0}
+  m_LocalPosition: {x: 31, y: -31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43689,7 +43689,7 @@ MonoBehaviour:
   FloatingDamagePrefab: {fileID: 7947544638735769484, guid: 90b04232210a8f74db7dd2bfc7e09a49, type: 3}
   hitSound: {fileID: 8300000, guid: e218765cbd13e6b42acbfcd295e52cd7, type: 3}
   ThunderFeetAnimation: {fileID: 8083041458848918675, guid: 4b980f1a668d72d49a91d89613f8a2cb, type: 3}
-  player: {fileID: 323529085}
+  player: {fileID: 323529084}
   tilemap: {fileID: 996243402}
 --- !u!4 &1314569960
 Transform:

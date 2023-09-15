@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public bool hasFireFists = false;
     public bool hasKnockback = false;
     public int knockbackHitCounter = 0;
+    public GameTile CurrentTile = null;
 
 
     // Start is called before the first frame update
@@ -71,6 +72,9 @@ public class Player : MonoBehaviour
                 if (hasThunderFeet) ApplyThunderFeet();
                 movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
 
+                GameManager.Instance.GameBoard.MoveEntity(CurrentTile, GameManager.Instance.GameBoard.Get(movePoint.position));
+                CurrentTile = GameManager.Instance.GameBoard.Get(movePoint.position);
+
                 turnEnded = true;
             }
             else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
@@ -91,6 +95,8 @@ public class Player : MonoBehaviour
 
                 if (hasThunderFeet) ApplyThunderFeet();
                 movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
+                GameManager.Instance.GameBoard.MoveEntity(CurrentTile, GameManager.Instance.GameBoard.Get(movePoint.position));
+                CurrentTile = GameManager.Instance.GameBoard.Get(movePoint.position);
                 turnEnded = true;
             }
             else

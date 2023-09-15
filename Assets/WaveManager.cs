@@ -54,6 +54,7 @@ public class WaveManager : Singleton<WaveManager>
 
         GameObject entity = Instantiate(SlimePrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
         tile.entity = entity;
+        entity.GetComponent<Enemy>().CurrentTile = tile;
         EnemiesAlive.Add(entity);
 
         EnemiesRemainingThisRound--;

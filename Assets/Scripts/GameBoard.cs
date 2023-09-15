@@ -37,6 +37,18 @@ public class GameBoard
         return board.Find(t => t.x == x && t.y == y);
     }
 
+    public GameTile Get(Vector3 pos)
+    {
+        return board.Find(t => t.x == (int)pos.x && t.y == (int)pos.y);
+    }
+
+    public void MoveEntity(GameTile currentTile, GameTile newTile)
+    {
+        if (!currentTile.entity) return;
+        newTile.entity = currentTile.entity;
+        currentTile.entity = null;
+    }
+
     public GameTile GetRandomEmptyCell()
     {
         GameTile tile;
