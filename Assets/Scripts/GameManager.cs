@@ -9,20 +9,19 @@ public class GameManager : Singleton<GameManager>
     public FloatingDamage FloatingDamagePrefab;
     public AudioClip hitSound;
     public GameObject ThunderFeetAnimation;
-    public GameObject player;
+    public GameObject PlayerGameObject;
+    [HideInInspector]
+    public Player Player;
     public GameBoard GameBoard;
     public Tilemap tilemap;
 
     // Start is called before the first frame update
     void Start()
     {
+        Player = PlayerGameObject.GetComponent<Player>();
         GameBoard = new GameBoard(tilemap);
         SetPlayerStartingPos();
         HomeMadePathfinder.Init(GameBoard);
-
-        //var path = PathFinder.FindPath(GameBoard.Get(34, -22), GameBoard.Get(29,-28));
-        //Debug.Log(path);
-        //path.ForEach(p => Debug.Log(p.worldPos));
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -35,9 +34,9 @@ public class GameManager : Singleton<GameManager>
 
     public void SetPlayerStartingPos()
     {
-        var playerTile = GameBoard.Get(player.transform.position);
-        playerTile.entity = player;
-        player.GetComponent<Player>().CurrentTile = playerTile;
+        var playerTile = GameBoard.Get(PlayerGameObject.transform.position);
+        playerTile.entity = PlayerGameObject;
+        Player.CurrentTile = playerTile;
     }
 
 

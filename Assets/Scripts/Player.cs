@@ -43,68 +43,51 @@ public class Player : MonoBehaviour
             WaveManager.Instance.StartNextTurnAndPerformSideEffects();
             turnEnded = false;
         }
+            
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 0f && Mathf.Abs(Input.GetAxisRaw("Vertical")) == 0f)
+        {
+            isHoldingKey = false;
+        }
         HandleMovement();
     }
 
     void HandleMovement()
     {
+        if (turnEnded || isHoldingKey) return;
+        Debug.Log(turnEnded);
+        Debug.Log(isHoldingKey);
 
-        if (turnEnded) return;
-
-        if (Vector3.Distance(transform.position, movePoint.position) <= 0.05f)
+        GameTile targetTile = null;
+        if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
         {
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
-            {
-                if (isHoldingKey) return;
-                isHoldingKey = true;
-                RaycastHit2D hit = Physics2D.Linecast(new Vector2(movePoint.position.x, movePoint.position.y), new Vector2(movePoint.position.x + Input.GetAxisRaw("Horizontal"), movePoint.position.y));
-                if (hit.transform)
-                {
-                    if (hit.transform.gameObject.tag == "Enemy")
-                    {
-                        if (hasFireFists) hit.transform.gameObject.GetComponent<Enemy>().isBurning = true;
-                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
-                        turnEnded = true;
-                    }
-                    return;
-                }
+            isHoldingKey = true;
+            targetTile = GameManager.Instance.GameBoard.Get(CurrentTile.x + (int)Input.GetAxisRaw("Horizontal"), CurrentTile.y);
+        }
+        else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
+        {
+            isHoldingKey = true;
+            targetTile = GameManager.Instance.GameBoard.Get(CurrentTile.x , CurrentTile.y + (int)Input.GetAxisRaw("Vertical"));
+        }
 
-                if (hasThunderFeet) ApplyThunderFeet();
-                movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
+        if (targetTile == null) return;
 
-                GameManager.Instance.GameBoard.MoveEntity(CurrentTile, GameManager.Instance.GameBoard.Get(movePoint.position));
-                CurrentTile = GameManager.Instance.GameBoard.Get(movePoint.position);
 
-                turnEnded = true;
-            }
-            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
-            {
-                if (isHoldingKey) return;
-                isHoldingKey = true;
-                RaycastHit2D hit = Physics2D.Linecast(new Vector2(movePoint.position.x, movePoint.position.y), new Vector2(movePoint.position.x, movePoint.position.y + Input.GetAxisRaw("Vertical")));
-                if (hit.transform)
-                {
-                    if (hit.transform.gameObject.tag == "Enemy")
-                    {
-                        if (hasFireFists) hit.transform.gameObject.GetComponent<Enemy>().isBurning = true;
-                        hit.transform.gameObject.GetComponent<Enemy>().TakeDamage(attack, this);
-                        turnEnded = true;
-                    }
-                    return;
-                }
-
-                if (hasThunderFeet) ApplyThunderFeet();
-                movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0);
-                GameManager.Instance.GameBoard.MoveEntity(CurrentTile, GameManager.Instance.GameBoard.Get(movePoint.position));
-                CurrentTile = GameManager.Instance.GameBoard.Get(movePoint.position);
-                turnEnded = true;
-            }
-            else
-            {
-                isHoldingKey = false;
-            }
+        if (targetTile.entity)
+        {
+            targetTile.entity.GetComponent<Enemy>().TakeDamage(attack, this);
+            turnEnded = true;
+        }
+        else
+        {
+            if (!targetTile.IsWalkable()) return;
+            movePoint.position = targetTile.worldPos;
+            GameManager.Instance.GameBoard.MoveEntity(CurrentTile, targetTile);
+            CurrentTile = targetTile;
+            turnEnded = true;
         }
     }
+
+
 
     public void TakeDamage(int damage)
     {

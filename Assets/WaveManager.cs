@@ -60,8 +60,9 @@ public class WaveManager : Singleton<WaveManager>
         EnemiesRemainingThisRound--;
     }
 
-    public void SpawnEnemy()
+    public void RemoveEnemy(GameObject enemy)
     {
-
+        Destroy(enemy);
+        EnemiesAlive.Remove(enemy);
     }
 }
