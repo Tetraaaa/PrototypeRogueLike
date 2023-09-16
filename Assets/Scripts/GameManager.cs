@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
     {
         GameBoard = new GameBoard(tilemap);
         SetPlayerStartingPos();
-        PathFinder.Init(GameBoard.board);
+        HomeMadePathfinder.Init(GameBoard);
 
         //var path = PathFinder.FindPath(GameBoard.Get(34, -22), GameBoard.Get(29,-28));
         //Debug.Log(path);

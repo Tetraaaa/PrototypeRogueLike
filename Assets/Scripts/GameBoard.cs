@@ -60,5 +60,17 @@ public class GameBoard
         return tile;
     }
 
+    public List<GameTile> GetNeighbors(GameTile tile)
+    {
+        List<GameTile> neighbors = new List<GameTile>();
+
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x - 1, tile.y));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x + 1, tile.y));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x, tile.y - 1));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x, tile.y + 1));
+        neighbors.RemoveAll(x => x == null);
+        return neighbors;
+    }
+
 
 }

@@ -50,12 +50,17 @@ public class Enemy : MonoBehaviour
     public void WalkTowardsPlayer()
     {
         if (playerPosition != null) return;
-        List<GameTile> path = PathFinder.FindPath(CurrentTile, GameManager.Instance.GameBoard.Get(51,-15));
+        List<GameTile> path = HomeMadePathfinder.FindPath(CurrentTile, GameManager.Instance.player.GetComponent<Player>().CurrentTile);
 
-        //Debug.Log("Recherche d'un chemin entre " + CurrentTile + " et " + GameManager.Instance.player.GetComponent<Player>().CurrentTile);
-        if (path == null) return;
-
+        Debug.Log("Recherche d'un chemin entre " + CurrentTile + " et " + GameManager.Instance.player.GetComponent<Player>().CurrentTile);
+        if (path == null)
+        {
+            return;
+        }
+        Debug.Log(path[0]);
         movePoint.position = path[0].worldPos;
+        GameManager.Instance.GameBoard.MoveEntity(CurrentTile, GameManager.Instance.GameBoard.Get(movePoint.position));
+        CurrentTile = GameManager.Instance.GameBoard.Get(movePoint.position);
     }
 
     public void CheckIfPlayerIsInContact()

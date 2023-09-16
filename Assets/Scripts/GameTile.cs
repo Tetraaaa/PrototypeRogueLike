@@ -12,6 +12,8 @@ public class GameTile
     public GameObject? entity = null;
     public bool hasCollision = false;
     public bool ignoreAllCollisions = false;
+    public int gCost;
+    public int hCost;
 
 
     public GameTile Parent = null;
@@ -26,11 +28,21 @@ public class GameTile
         this.worldPos = new Vector3(x, y);
     }
 
+    public int fCost
+    {
+        get
+        {
+            return gCost + hCost;
+        }
+    }
+
     public bool IsWalkable()
     {
         if (ignoreAllCollisions) return true;
         return !hasCollision && entity == null;
     }
+
+
 
     public override string ToString()
     {

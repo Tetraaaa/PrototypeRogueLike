@@ -23,6 +23,9 @@ public static class PathFinder
 
     private static List<GameTile> ProcessPath(GameTile startTile, GameTile endTile)
     {
+
+
+
         Queue<GameTile> queue = new Queue<GameTile>();
         HashSet<GameTile> visited = new HashSet<GameTile>();
 
@@ -191,22 +194,11 @@ public static class PathFinder
     {
         List<GameTile> neighbors = new List<GameTile>();
 
-        // Recherche des voisins en haut, en bas, à gauche et à droite (4 directions)
-        int[] xOffset = { 0, 0, -1, 1 };
-        int[] yOffset = { -1, 1, 0, 0 };
-
-        for (int i = 0; i < xOffset.Length; i++)
-        {
-            int neighborX = tile.x + xOffset[i];
-            int neighborY = tile.y + yOffset[i];
-
-            GameTile neighbor = Tiles.Find(t => t.x == neighborX && t.y == neighborY);
-            if (neighbor != null)
-            {
-                neighbors.Add(neighbor);
-            }
-        }
-
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x - 1, tile.y));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x + 1, tile.y));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x, tile.y - 1));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x, tile.y + 1));
+        neighbors.RemoveAll(x => x == null);
         return neighbors;
     }
 }
