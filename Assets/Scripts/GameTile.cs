@@ -42,8 +42,6 @@ public class GameTile
         return !hasCollision && entity == null;
     }
 
-
-
     public override string ToString()
     {
         return "T( " + x + ";" + y + ")" + ",walkable:" + IsWalkable();

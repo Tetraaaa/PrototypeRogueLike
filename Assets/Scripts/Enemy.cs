@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,10 +13,13 @@ public class Enemy : MonoBehaviour
     private int attack = 1;
     public List<string> logs = new List<string>();
     private Color damageColor = new Color(255, 255, 255);
-    public bool isBurning;
     public GameTile CurrentTile = null;
     public GameTile? playerPosition;
     public bool willAttackPlayerNextTurn = false;
+    public List<Burning> debuffs = new List<Burning>();
+
+    public Action OnTurnStart;
+    public Action OnDeath;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,22 +30,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isBurning) GetComponent<SpriteRenderer>().color = new Color32(246, 152, 85, 255);
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     public void PlayTurn()
     {
-        if (isBurning) TakeDamage(1, GameManager.Instance.Player);
-        if(willAttackPlayerNextTurn)
+        OnTurnStart?.Invoke();
+        if (playerPosition != null)
         {
             HitPlayerIfStillThere();
-            willAttackPlayerNextTurn = false;
-        }
-        else if (playerPosition != null)
-        {
-            willAttackPlayerNextTurn = true;
-            //Ici : On pourrait changer le sprite du mob en son animation d'attaque
         }
         else
         {
@@ -97,6 +92,7 @@ public class Enemy : MonoBehaviour
 
         if (currentHp <= 0)
         {
+            OnDeath?.Invoke();
             CurrentTile.entity = null;
             Destroy(movePoint.gameObject);
             WaveManager.Instance.RemoveEnemy(gameObject);

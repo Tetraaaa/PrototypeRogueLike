@@ -41,7 +41,7 @@ public class WaveManager : Singleton<WaveManager>
 
     public void PlayEnemiesTurn()
     {
-        foreach (var enemy in EnemiesAlive)
+        foreach (var enemy in EnemiesAlive.ToArray())
         {
             enemy.GetComponent<Enemy>().PlayTurn();
         }

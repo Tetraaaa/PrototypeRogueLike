@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,16 +17,21 @@ public class Player : MonoBehaviour
     private Color damageColor = new Color(240, 0, 0);
     public int xpNeededForLevelUp = 50;
     public int level = 1;
-    public bool hasThunderFeet = false;
     public bool hasFireFists = false;
     public bool hasKnockback = false;
     public int knockbackHitCounter = 0;
     public GameTile CurrentTile = null;
 
+    public Action<GameTile> OnMove;
+    public Action<Enemy> OnHit;
+
+    public List<Perk> perks = new List<Perk>();
+
 
     // Start is called before the first frame update
     void Start()
     {
+        perks.Add(new FireFistsPerk(this));
         movePoint.parent = null;
         currentHp = maxHP;
     }
@@ -54,8 +59,6 @@ public class Player : MonoBehaviour
     void HandleMovement()
     {
         if (turnEnded || isHoldingKey) return;
-        Debug.Log(turnEnded);
-        Debug.Log(isHoldingKey);
 
         GameTile targetTile = null;
         if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
@@ -75,6 +78,7 @@ public class Player : MonoBehaviour
         if (targetTile.entity)
         {
             targetTile.entity.GetComponent<Enemy>().TakeDamage(attack, this);
+            OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>());
             turnEnded = true;
         }
         else
@@ -83,11 +87,11 @@ public class Player : MonoBehaviour
             movePoint.position = targetTile.worldPos;
             GameManager.Instance.GameBoard.MoveEntity(CurrentTile, targetTile);
             CurrentTile = targetTile;
+            OnMove?.Invoke(targetTile);
+
             turnEnded = true;
         }
     }
-
-
 
     public void TakeDamage(int damage)
     {
@@ -106,44 +110,6 @@ public class Player : MonoBehaviour
             xpNeededForLevelUp += 50*level;
             GameManager.Instance.ChooseNewPerks();
         }
-    }
-
-    public void ApplyThunderFeet()
-    {
-        Vector2 currentPosition = movePoint.position;
-
-        RaycastHit2D leftTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.left);
-        RaycastHit2D rightTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.right);
-        RaycastHit2D upTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.up);
-        RaycastHit2D downTarget = Physics2D.Linecast(currentPosition, currentPosition + Vector2.down);
-
-        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.left, Quaternion.identity, transform);
-        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.right, Quaternion.identity, transform);
-        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.up, Quaternion.identity, transform);
-        Instantiate(GameManager.Instance.ThunderFeetAnimation, currentPosition + Vector2.down, Quaternion.identity, transform);
-
-        if (leftTarget.transform && leftTarget.transform.gameObject.tag == "Enemy")
-        {
-            leftTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
-        }
-        if (rightTarget.transform && rightTarget.transform.gameObject.tag == "Enemy")
-        {
-            rightTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
-        }
-        if (upTarget.transform && upTarget.transform.gameObject.tag == "Enemy")
-        {
-            upTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
-        }
-        if (downTarget.transform && downTarget.transform.gameObject.tag == "Enemy")
-        {
-            downTarget.transform.gameObject.GetComponent<Enemy>().TakeDamage(2, this);
-        }
-
-    }
-
-    public void AddThunderFeetPerk()
-    {
-        hasThunderFeet = true;
     }
 
 }
