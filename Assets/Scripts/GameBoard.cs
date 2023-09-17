@@ -23,7 +23,6 @@ public class GameBoard
                 board.Add(new GameTile(i, j, x, y, tilemap.HasTile(new Vector3Int(x, y, 0))));
             }
         }
-
     }
 
     public void SetEntityOnTile(int x, int y, GameObject? entity)
@@ -71,6 +70,42 @@ public class GameBoard
         neighbors.RemoveAll(x => x == null);
         return neighbors;
     }
+
+    public GameTile GetAdjacent(GameTile tile, ProjectileDirection direction)
+    {
+        switch (direction)
+        {
+            case ProjectileDirection.Up:
+                return Up(tile);
+            case ProjectileDirection.Down:
+                return Down(tile);
+            case ProjectileDirection.Left:
+                return Left(tile);
+            case ProjectileDirection.Right:
+                return Right(tile);
+            default:
+                return null;
+        }
+    }
+
+    public GameTile Up(GameTile tile)
+    {
+        return Get(tile.x, tile.y + 1);
+    }
+    public GameTile Down(GameTile tile)
+    {
+        return Get(tile.x, tile.y - 1);
+    }
+    public GameTile Left(GameTile tile)
+    {
+        return Get(tile.x - 1, tile.y);
+    }
+
+    public GameTile Right(GameTile tile)
+    {
+        return Get(tile.x + 1, tile.y);
+    }
+
 
 
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,9 @@ public class WaveManager : Singleton<WaveManager>
     private int EnemiesRemainingThisRound = 15;
     private List<GameObject> EnemiesAlive = new List<GameObject>();
     public GameObject SlimePrefab;
+    public GameObject SkeletonPrefab;
+
+    public Action OnPlayTurn;
 
 
     // Start is called before the first frame update
@@ -41,18 +44,24 @@ public class WaveManager : Singleton<WaveManager>
 
     public void PlayEnemiesTurn()
     {
-        foreach (var enemy in EnemiesAlive.ToArray())
-        {
-            enemy.GetComponent<Enemy>().PlayTurn();
-        }
+        OnPlayTurn?.Invoke();
     }
 
     public void SpawnSomeEnemies()
     {
+        GameObject nextSpawnPrefab;
+        if(UnityEngine.Random.Range(0f,1f) > 0.5f)
+        {
+            nextSpawnPrefab = SkeletonPrefab;
+        }
+        else
+        {
+            nextSpawnPrefab = SlimePrefab;
+        }
         if (EnemiesRemainingThisRound <= 0) return;
         GameTile tile = GameManager.Instance.GameBoard.GetRandomEmptyCell();
 
-        GameObject entity = Instantiate(SlimePrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
+        GameObject entity = Instantiate(nextSpawnPrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
         tile.entity = entity;
         entity.GetComponent<Enemy>().CurrentTile = tile;
         EnemiesAlive.Add(entity);

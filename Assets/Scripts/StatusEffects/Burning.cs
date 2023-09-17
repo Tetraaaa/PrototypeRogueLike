@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Burning
+public class Burning:Debuff
 {
     private Enemy target;
     private int damage = 1;

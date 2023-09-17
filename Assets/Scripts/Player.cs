@@ -10,28 +10,44 @@ public class Player : MonoBehaviour
     public int XCoordinate = 0;
     public int YCoordinate = 0;
     private bool isHoldingKey = false;
-    public int attack = 20;
-    private int maxHP = 20;
-    private int currentHp;
     private bool turnEnded = false;
     private Color damageColor = new Color(240, 0, 0);
     public int xpNeededForLevelUp = 50;
     public int level = 1;
-    public bool hasFireFists = false;
-    public bool hasKnockback = false;
-    public int knockbackHitCounter = 0;
     public GameTile CurrentTile = null;
+    private bool lowHealthThresholdReached = false;
 
+    //Stats
+    public int maxHP = 20;
+    public int currentHp;
+    public int attack = 20;
+    public float attackMultiplier = 1f;
+    public int armor = 0;
+    public float dodgeChance = 0f;
+    public float parryChance = 0f;
+    public float critChance = 0f;
+    public float critDamageMultiplier = 1.5f;
+
+    //Events
     public Action<GameTile> OnMove;
     public Action<Enemy> OnHit;
+    public Action OnLowHealth;
 
     public List<Perk> perks = new List<Perk>();
+
+    public int physicalDamage
+    {
+        get
+        {
+            return (int)(attack * attackMultiplier);
+        }
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        perks.Add(new FireFistsPerk(this));
+        perks.Add(new EnergyDrinkPerk(this));
         movePoint.parent = null;
         currentHp = maxHP;
     }
@@ -68,7 +84,7 @@ public class Player : MonoBehaviour
         }
         else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
         {
-            isHoldingKey = true;
+            isHoldingKey = true;    
             targetTile = GameManager.Instance.GameBoard.Get(CurrentTile.x , CurrentTile.y + (int)Input.GetAxisRaw("Vertical"));
         }
 
@@ -77,8 +93,14 @@ public class Player : MonoBehaviour
 
         if (targetTile.entity)
         {
-            targetTile.entity.GetComponent<Enemy>().TakeDamage(attack, this);
-            OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>());
+            bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
+            int attackDamage = attack;
+            if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
+            targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, this);
+            if(targetTile.entity != null)
+            {
+                OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>());
+            }
             turnEnded = true;
         }
         else
@@ -93,12 +115,32 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Enemy hitBy)
     {
-        currentHp -= damage;
+        bool playerDodged = UnityEngine.Random.Range(0f, 100f) <= dodgeChance;
+        if(playerDodged)
+        {
+            //TODO : Jouer le son du dodge
+            FloatingTextManager.Instance.ShowFloatingText(transform.position, "DODGE", Color.white);
+            bool playerParried = UnityEngine.Random.Range(0f, 100f) <= parryChance;
+            if(playerParried)
+            {
+                hitBy.TakeDamage(physicalDamage + (int)(damage*0.2f), this);
+                FloatingTextManager.Instance.ShowFloatingText(transform.position, "PARRY !", Color.white);
+            }
+            return;
+        }
+        int damageOnHp = damage - armor;
+        if (damageOnHp < 0) damageOnHp = 0;
+        currentHp -= damageOnHp;
         GameManager.Instance.PlayHitSound();
-        GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
+        FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damageOnHp, damageColor);
         if (currentHp <= 0) Destroy(gameObject);
+        if (!lowHealthThresholdReached && currentHp <= maxHP * 0.2)
+        {
+            OnLowHealth?.Invoke();
+            lowHealthThresholdReached = true;
+        }
     }
 
     public void GainExp(int xp)
@@ -110,6 +152,14 @@ public class Player : MonoBehaviour
             xpNeededForLevelUp += 50*level;
             GameManager.Instance.ChooseNewPerks();
         }
+    }
+
+    public void Heal(int hp)
+    {
+        this.currentHp += hp;
+        if (currentHp > maxHP) currentHp = maxHP;
+        if (lowHealthThresholdReached && currentHp > maxHP * 0.2) lowHealthThresholdReached = false;
+        FloatingTextManager.Instance.ShowFloatingDamage(transform.position, hp, new Color32(0, 145, 10, 255));
     }
 
 }

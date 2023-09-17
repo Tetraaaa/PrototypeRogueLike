@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public Transform movePoint;
     public float moveSpeed = 7f;
@@ -10,19 +10,20 @@ public class Enemy : MonoBehaviour
 
     private int maxHP = 20;
     private int currentHp;
-    private int attack = 1;
+    private int attack = 2;
     public List<string> logs = new List<string>();
     private Color damageColor = new Color(255, 255, 255);
     public GameTile CurrentTile = null;
     public GameTile? playerPosition;
     public bool willAttackPlayerNextTurn = false;
-    public List<Burning> debuffs = new List<Burning>();
+    public List<Debuff> debuffs = new List<Debuff>();
 
     public Action OnTurnStart;
     public Action OnDeath;
     // Start is called before the first frame update
     void Start()
     {
+        WaveManager.Instance.OnPlayTurn += PlayTurn;
         movePoint.parent = null;
         currentHp = maxHP;
     }
@@ -33,20 +34,7 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
-    public void PlayTurn()
-    {
-        OnTurnStart?.Invoke();
-        if (playerPosition != null)
-        {
-            HitPlayerIfStillThere();
-        }
-        else
-        {
-            CheckIfPlayerIsInContact();
-            if(playerPosition == null) WalkTowardsPlayer();
-        }
-    }
-
+    public abstract void PlayTurn();
     public void WalkTowardsPlayer()
     {
         if (playerPosition != null) return;
@@ -74,7 +62,7 @@ public class Enemy : MonoBehaviour
     {
         if(GameManager.Instance.Player.CurrentTile == playerPosition)
         {
-            GameManager.Instance.Player.TakeDamage(attack);
+            GameManager.Instance.Player.TakeDamage(attack, this);
         }
         else
         {
@@ -86,7 +74,7 @@ public class Enemy : MonoBehaviour
     {
         this.currentHp -= damage;
         GameManager.Instance.PlayHitSound();
-        GameManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
+        FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         GetComponent<ParticleSystem>().Play();
 
 

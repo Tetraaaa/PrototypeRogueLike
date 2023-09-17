@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class FireFistsPerk:Perk
 {
-    Player target;
-    public FireFistsPerk(Player target)
+    private int burningLevel = 1;
+    public FireFistsPerk(Player owner)
     {
-        this.target = target;
-        this.target.OnHit += OnHit;
+        this.rarity = PerkRarity.Uncommon;
+        this.owner = owner;
+        this.owner.OnHit += OnHit;
+    }
+
+    public string Description
+    {
+        get
+        {
+            return $"Vos attaques appliquent une brûlure de {1} point de dégâts.";
+        }
     }
 
     public void OnHit(Enemy enemy)

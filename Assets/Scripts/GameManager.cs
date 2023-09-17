@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 public class GameManager : Singleton<GameManager>
 {
     private AudioSource audioSource;
-    public FloatingDamage FloatingDamagePrefab;
     public AudioClip hitSound;
     public GameObject ThunderFeetAnimation;
     public GameObject PlayerGameObject;
@@ -46,12 +45,7 @@ public class GameManager : Singleton<GameManager>
         audioSource.PlayOneShot(hitSound);
     }
 
-    public void ShowFloatingDamage(Vector3 position, int damage, Color color)
-    {
-        FloatingDamage floatingDamage = Instantiate(FloatingDamagePrefab, position, Quaternion.identity, null);
-        floatingDamage.SetText(damage.ToString(), color);
-        floatingDamage.gameObject.SetActive(true);
-    }
+
 
     public void ChooseNewPerks()
     {

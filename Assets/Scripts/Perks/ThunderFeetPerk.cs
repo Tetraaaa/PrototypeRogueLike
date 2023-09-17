@@ -5,12 +5,20 @@ using UnityEngine;
 public class ThunderFeetPerk:Perk
 {
     private int damage = 2;
-    private Player owner;
 
     public ThunderFeetPerk(Player owner)
     {
+        this.rarity = PerkRarity.Uncommon;
         this.owner = owner;
         this.owner.OnMove += OnMove;
+    }
+
+    public string Description
+    {
+        get
+        {
+            return $"Lorsque vous vous déplacez, le sol autour de vous s'électrise, infligeant {damage} points de dégâts aux cases adjacentes";
+        }
     }
 
     public void OnMove(GameTile targetTile)
