@@ -88,4 +88,9 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    public override string ToString()
+    {
+        return "Ennemi : " + CurrentTile.ToString();
+    }
+
 }

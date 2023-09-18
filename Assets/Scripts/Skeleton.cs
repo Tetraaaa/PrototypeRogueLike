@@ -79,6 +79,7 @@ public class Skeleton : Enemy
         bone.DistanceToTravel = scanRange;
         bone.CurrentTile = spawnTile;
         spawnTile.entity = boneGameObject;
+        WaveManager.Instance.AddEnemy(boneGameObject);
 
         CurrentBoneCooldown = BoneCooldownInTurns;
     }

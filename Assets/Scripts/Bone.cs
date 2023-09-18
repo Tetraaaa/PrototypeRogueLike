@@ -2,31 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bone : MonoBehaviour
+public class Bone : Enemy
 {
-    public Transform movePoint;
-    public GameTile CurrentTile;
     public ProjectileDirection ProjectileDirection;
     public int DistanceToTravel = 1;
-    private float moveSpeed = 7f;
 
-    public void Start()
-    {
-        movePoint.parent = null;
-        WaveManager.Instance.OnPlayTurn += PlayTurn;
-    }
-
-    private void Update()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
-    }
-
-    private void OnDestroy()
-    {
-        WaveManager.Instance.OnPlayTurn -= PlayTurn;
-    }
-
-    public void PlayTurn()
+    public override void PlayTurn()
     {
         if (DistanceToTravel <= 0) Remove();
         GameTile targetTile = GameManager.Instance.GameBoard.GetAdjacent(CurrentTile, ProjectileDirection);
@@ -45,7 +26,7 @@ public class Bone : MonoBehaviour
     {
         CurrentTile.entity = null;
         Destroy(movePoint.gameObject);
-        Destroy(gameObject);
+        WaveManager.Instance.RemoveEnemy(gameObject);
     }
 
 }

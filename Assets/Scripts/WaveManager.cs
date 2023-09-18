@@ -44,7 +44,10 @@ public class WaveManager : Singleton<WaveManager>
 
     public void PlayEnemiesTurn()
     {
-        OnPlayTurn?.Invoke();
+        foreach (GameObject enemy in EnemiesAlive.ToArray())
+        {
+            (enemy.GetComponent<MonoBehaviour>() as Enemy).PlayTurn();
+        }
     }
 
     public void SpawnSomeEnemies()
@@ -73,5 +76,10 @@ public class WaveManager : Singleton<WaveManager>
     {
         Destroy(enemy);
         EnemiesAlive.Remove(enemy);
+    }
+
+    public void AddEnemy(GameObject enemy)
+    {
+        EnemiesAlive.Add(enemy);
     }
 }
