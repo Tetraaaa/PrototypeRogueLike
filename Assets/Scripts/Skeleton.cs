@@ -9,6 +9,7 @@ public class Skeleton : Enemy
     public GameObject Bone;
     private int BoneCooldownInTurns = 3;
     private int CurrentBoneCooldown = 0;
+    private int attack = 3;
     public override void PlayTurn()
     {
         if(CurrentBoneCooldown != 0) CurrentBoneCooldown--;
@@ -71,13 +72,16 @@ public class Skeleton : Enemy
 
         playerPosition = null;
         GameTile spawnTile = GameManager.Instance.GameBoard.GetAdjacent(CurrentTile, boneDirection);
-        if (spawnTile == null ||  !spawnTile.IsWalkable() || spawnTile.entity != null) return;
+
+        if (spawnTile == null ||  !spawnTile.IsWalkable()) return;
 
         GameObject boneGameObject = Instantiate(Bone, spawnTile.worldPos, Quaternion.identity, null);
         Bone bone = boneGameObject.GetComponent<Bone>();
         bone.ProjectileDirection = boneDirection;
         bone.DistanceToTravel = scanRange;
         bone.CurrentTile = spawnTile;
+        bone.attack = attack;
+        bone.thrower = this;
         spawnTile.entity = boneGameObject;
         WaveManager.Instance.AddEnemy(boneGameObject);
 
