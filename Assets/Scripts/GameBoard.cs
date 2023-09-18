@@ -1,15 +1,17 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Drawing;
 
 public class GameBoard
 {
-    public List<GameTile> board;
+    public Dictionary<Point, GameTile> board;
+
     public GameBoard(Tilemap tilemap)
     {
-        board = new List<GameTile>();
+        board = new Dictionary<Point, GameTile>();
         tilemap.CompressBounds(); 
         //On place l'origine en haut à gauche (au lieu d'en bas à gauche) pour faciliter
         tilemap.origin = new Vector3Int(-32, 31, 0);
@@ -20,7 +22,7 @@ public class GameBoard
             //En y, on va en bas donc de 31 à -32
             for (int y = 31, j = 0; y >= -32; y--, j--)
             {
-                board.Add(new GameTile(i, j, x, y, tilemap.HasTile(new Vector3Int(x, y, 0))));
+                board.Add(new Point(i,j), new GameTile(i, j, x, y, tilemap.HasTile(new Vector3Int(x, y, 0))));
             }
         }
     }
@@ -33,12 +35,14 @@ public class GameBoard
 
     public GameTile Get(int x, int y)
     {
-        return board.Find(t => t.x == x && t.y == y);
+        GameTile tile;
+        board.TryGetValue(new Point(x, y), out tile);
+        return tile;
     }
 
     public GameTile Get(Vector3 pos)
     {
-        return board.Find(t => t.x == (int)pos.x && t.y == (int)pos.y);
+        return Get((int)pos.x, (int)pos.y);
     }
 
     public void MoveEntity(GameTile currentTile, GameTile newTile)
@@ -53,7 +57,7 @@ public class GameBoard
         GameTile tile;
         do
         {
-            tile = board[Random.Range(0, board.Count)];
+            tile = board.ElementAt(UnityEngine.Random.Range(0, board.Count)).Value;
         } while (tile.hasCollision || tile.entity != null);
 
         return tile;
@@ -105,7 +109,6 @@ public class GameBoard
     {
         return Get(tile.x + 1, tile.y);
     }
-
-
-
 }
+
+

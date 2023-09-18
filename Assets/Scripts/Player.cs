@@ -75,8 +75,8 @@ public class Player : MonoBehaviour
     void HandleMovement()
     {
         if (turnEnded || isHoldingKey) return;
-
         GameTile targetTile = null;
+
         if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
         {
             isHoldingKey = true;

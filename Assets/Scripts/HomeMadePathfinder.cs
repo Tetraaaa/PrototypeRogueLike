@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Drawing;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +14,10 @@ public class HomeMadePathfinder : MonoBehaviour
     public static List<GameTile> FindPath(GameTile startTile, GameTile endTile)
     {
         endTile.ignoreAllCollisions = true;
-        Board.board.ForEach(x => x.Parent = null);
+        foreach (KeyValuePair<Point, GameTile> entry in Board.board)
+        {
+            entry.Value.Parent = null;
+        }
         List<GameTile> result = ProcessPath(startTile, endTile);
         endTile.ignoreAllCollisions = false;
         return result;

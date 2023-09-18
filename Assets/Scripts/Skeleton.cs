@@ -40,7 +40,6 @@ public class Skeleton : Enemy
 
     public void ThrowBone()
     {
-        Debug.Log("lancer os :)");
         ProjectileDirection boneDirection;
         //Ici on part du principe que la position du joueur (celle qu'on a) est forcément alignée avec nous, donc on check juste les coordonnées en x et y pour savoir dans quelle direction lancer l'os
         if(playerPosition.x == CurrentTile.x)
@@ -70,11 +69,8 @@ public class Skeleton : Enemy
             throw new System.Exception("wow il pue la merde cet algo wtf x)");
         }
 
-        Debug.Log("je vais lancer os vers " + boneDirection);
-
         playerPosition = null;
         GameTile spawnTile = GameManager.Instance.GameBoard.GetAdjacent(CurrentTile, boneDirection);
-        Debug.Log("voilou l'os va apparaitre en " + spawnTile);
         if (spawnTile == null ||  !spawnTile.IsWalkable() || spawnTile.entity != null) return;
 
         GameObject boneGameObject = Instantiate(Bone, spawnTile.worldPos, Quaternion.identity, null);
