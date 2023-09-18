@@ -9,7 +9,13 @@ public class Skeleton : Enemy
     public GameObject Bone;
     private int BoneCooldownInTurns = 3;
     private int CurrentBoneCooldown = 0;
-    private int attack = 3;
+
+    public override void Start()
+    {
+        base.Start();
+        attack = 6;
+    }
+
     public override void PlayTurn()
     {
         if(CurrentBoneCooldown != 0) CurrentBoneCooldown--;
@@ -80,7 +86,6 @@ public class Skeleton : Enemy
         bone.ProjectileDirection = boneDirection;
         bone.DistanceToTravel = scanRange;
         bone.CurrentTile = spawnTile;
-        bone.attack = attack;
         bone.thrower = this;
         spawnTile.entity = boneGameObject;
         WaveManager.Instance.AddEnemy(boneGameObject);

@@ -10,7 +10,7 @@ public abstract class Enemy : MonoBehaviour
 
     private int maxHP = 20;
     private int currentHp;
-    private int attack = 2;
+    public int attack = 2;
     public List<string> logs = new List<string>();
     private Color damageColor = new Color(255, 255, 255);
     public GameTile CurrentTile = null;
@@ -21,9 +21,8 @@ public abstract class Enemy : MonoBehaviour
     public Action OnTurnStart;
     public Action OnDeath;
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
-        WaveManager.Instance.OnPlayTurn += PlayTurn;
         movePoint.parent = null;
         currentHp = maxHP;
     }

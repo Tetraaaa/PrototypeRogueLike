@@ -6,8 +6,13 @@ public class Bone : Enemy
 {
     public ProjectileDirection ProjectileDirection;
     public int DistanceToTravel = 1;
-    public int attack;
     public Skeleton thrower;
+
+    public override void Start()
+    {
+        base.Start();
+        attack = thrower.attack;
+    }
 
     public override void PlayTurn()
     {
