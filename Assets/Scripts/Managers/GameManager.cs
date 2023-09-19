@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
         Player.perks.Add(new FireFistsPerk(Player));
         Player.perks.Add(new ThunderFeetPerk(Player));
 
-        audioSource = GetComponent<AudioSource>();
         UIManager.Instance.Init();
     }
 
@@ -41,15 +40,6 @@ public class GameManager : Singleton<GameManager>
         playerTile.entity = PlayerGameObject;
         Player.CurrentTile = playerTile;
     }
-
-
-
-    public void PlayHitSound()
-    {
-        audioSource.PlayOneShot(hitSound);
-    }
-
-
 
     public void ChooseNewPerks()
     {

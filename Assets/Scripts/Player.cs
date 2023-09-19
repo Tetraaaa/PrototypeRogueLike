@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         int damageOnHp = damage - armor;
         if (damageOnHp < 0) damageOnHp = 0;
         currentHp -= damageOnHp;
-        GameManager.Instance.PlayHitSound();
+        SoundManager.Instance.Hit();
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damageOnHp, damageColor);
         UIManager.Instance.UpdatePlayerHealth();
         if (currentHp <= 0) Destroy(gameObject);
@@ -151,6 +151,8 @@ public class Player : MonoBehaviour
         {
             level++;
             xpNeededForLevelUp += 50*level;
+            FloatingTextManager.Instance.ShowLevelUpText(transform.position);
+            SoundManager.Instance.LevelUp();
             GameManager.Instance.ChooseNewPerks();
         }
     }

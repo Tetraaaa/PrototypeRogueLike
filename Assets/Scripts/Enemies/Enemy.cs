@@ -72,7 +72,7 @@ public abstract class Enemy : MonoBehaviour
     public void TakeDamage(int damage, Player attacker)
     {
         this.currentHp -= damage;
-        GameManager.Instance.PlayHitSound();
+        SoundManager.Instance.Hit();
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         GetComponent<ParticleSystem>().Play();
 

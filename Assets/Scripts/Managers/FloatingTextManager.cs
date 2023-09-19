@@ -5,6 +5,7 @@ using UnityEngine;
 public class FloatingTextManager : Singleton<FloatingTextManager>
 {
     public FloatingDamage FloatingDamagePrefab;
+    public FloatingDamage FloatingLevelUpPrefab;
 
     public void ShowFloatingDamage(Vector3 position, int damage, Color color)
     {
@@ -17,6 +18,12 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
     {
         FloatingDamage floatingDamage = Instantiate(FloatingDamagePrefab, position, Quaternion.identity, null);
         floatingDamage.SetText(text, color);
+        floatingDamage.gameObject.SetActive(true);
+    }
+
+    public void ShowLevelUpText(Vector3 position)
+    {
+        FloatingDamage floatingDamage = Instantiate(FloatingLevelUpPrefab, position, Quaternion.identity, null);
         floatingDamage.gameObject.SetActive(true);
     }
 }
