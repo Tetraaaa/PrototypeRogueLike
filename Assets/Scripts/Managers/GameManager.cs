@@ -22,6 +22,9 @@ public class GameManager : Singleton<GameManager>
         SetPlayerStartingPos();
         HomeMadePathfinder.Init(GameBoard);
 
+        Player.perks.Add(new FireFistsPerk(Player));
+        Player.perks.Add(new ThunderFeetPerk(Player));
+
         audioSource = GetComponent<AudioSource>();
     }
 
