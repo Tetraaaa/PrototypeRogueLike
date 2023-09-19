@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
         Player.perks.Add(new ThunderFeetPerk(Player));
 
         audioSource = GetComponent<AudioSource>();
+        UIManager.Instance.Init();
     }
 
     // Update is called once per frame

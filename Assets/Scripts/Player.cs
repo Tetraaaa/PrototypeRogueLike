@@ -135,6 +135,7 @@ public class Player : MonoBehaviour
         currentHp -= damageOnHp;
         GameManager.Instance.PlayHitSound();
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damageOnHp, damageColor);
+        UIManager.Instance.UpdatePlayerHealth();
         if (currentHp <= 0) Destroy(gameObject);
         if (!lowHealthThresholdReached && currentHp <= maxHP * 0.2)
         {
