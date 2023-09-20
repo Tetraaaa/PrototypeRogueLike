@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class SmallSwordPerk : Perk
@@ -10,15 +11,15 @@ public class SmallSwordPerk : Perk
         this.owner = owner;
         owner.attackMultiplier += 0.2f;
         rarity = PerkRarity.Common;
+        image = Resources.Load<Sprite>("Perks/small_sword");
     }
 
-    public string Description
+    public override string Description
     {
         get
         {
-            return $"Augmente les dégâts des attaques de {attackMultiplier*100}%";
+            return $"Augmente les dégâts des attaques de <color=ff0000>{attackMultiplier * 100}</color>%";
         }
     }
-
 
 }

@@ -12,7 +12,7 @@ TagManager:
   - Colliders
   - Water
   - UI
-  - 
+  - UIText
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Layer1
+    uniqueID: 3876423749
     locked: 0

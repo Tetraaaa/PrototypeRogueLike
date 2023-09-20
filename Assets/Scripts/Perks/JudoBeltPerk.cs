@@ -12,7 +12,7 @@ public class JudoBeltPerk : Perk
         this.owner.dodgeChance += dodgeChanceGain;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {

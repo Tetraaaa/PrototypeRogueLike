@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnergyDrinkPerk : Perk
 {
@@ -10,13 +11,15 @@ public class EnergyDrinkPerk : Perk
         rarity = PerkRarity.Uncommon;
         this.owner = owner;
         owner.OnLowHealth += OnLowHealth;
+        image = Resources.Load<Sprite>("Perks/energy_drink");
     }
 
-    public string Description
+
+    public override string Description
     {
         get
         {
-            return $"Lorsque vous tombez sous 20% de vos PV max, régénère {healAmount*100}% de vos PV max (usage unique).";
+            return $"Boisson Énergisante\n\nLorsque vous tombez sous 20% de vos PV max, régénère <color=green>{healAmount*100}</color>% de vos PV max (usage unique).";
         }
     }
 

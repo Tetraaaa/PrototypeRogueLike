@@ -12,11 +12,11 @@ public class FireFistsPerk:Perk
         this.owner.OnHit += OnHit;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {
-            return $"Vos attaques appliquent une brûlure de {1} point de dégâts.";
+            return $"Vos attaques appliquent une brûlure de {burningLevel} point de dégâts.";
         }
     }
 

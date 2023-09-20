@@ -13,7 +13,7 @@ public class ThunderFeetPerk:Perk
         this.owner.OnMove += OnMove;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {

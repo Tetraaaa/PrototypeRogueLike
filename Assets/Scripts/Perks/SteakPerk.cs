@@ -12,7 +12,7 @@ public class SteakPerk : Perk
         this.rarity = PerkRarity.Common;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {

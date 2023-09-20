@@ -12,11 +12,12 @@ public class WoodenShieldPerk : Perk
         this.owner.parryChance += increasedBlockChance;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {
-            return $"Augmente les chances de parer (après une esquive) de {increasedBlockChance * 100f}%";
+            return $"Augmente les chances de parer (après une esquive) de <color=red>{increasedBlockChance * 100f}</color>%";
+
         }
     }
 }

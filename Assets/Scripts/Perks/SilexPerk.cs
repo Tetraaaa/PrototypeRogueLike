@@ -12,7 +12,7 @@ public class SilexPerk : Perk
         this.owner.critDamageMultiplier += bonusCritDamage;
     }
 
-    public string Description
+    public override string Description
     {
         get
         {

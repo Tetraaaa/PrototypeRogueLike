@@ -26,6 +26,8 @@ public class GameManager : Singleton<GameManager>
         Player.perks.Add(new ThunderFeetPerk(Player));
 
         UIManager.Instance.Init();
+
+        UIManager.Instance.OpenPerksMenu();
     }
 
     // Update is called once per frame
