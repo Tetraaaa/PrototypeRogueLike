@@ -21,19 +21,7 @@ public class GameManager : Singleton<GameManager>
         GameBoard = new GameBoard(tilemap);
         SetPlayerStartingPos();
         HomeMadePathfinder.Init(GameBoard);
-
-        Player.perks.Add(new FireFistsPerk(Player));
-        Player.perks.Add(new ThunderFeetPerk(Player));
-
         UIManager.Instance.Init();
-
-        UIManager.Instance.OpenPerksMenu();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetPlayerStartingPos()
@@ -45,7 +33,19 @@ public class GameManager : Singleton<GameManager>
 
     public void ChooseNewPerks()
     {
-
+        List<Perk> defaultPerkPool = new List<Perk>() { new SmallSwordPerk(), new GlassEyePerk(), new SteakPerk(), new JudoBeltPerk(), new WoodenShieldPerk(), new SilexPerk() };
+        List<Perk> pickedPerks = new List<Perk>();
+        while(pickedPerks.Count < 3)
+        {
+            Perk picked = null;
+            do
+            {
+                int itemIndex = Random.Range(0, defaultPerkPool.Count);
+                picked = defaultPerkPool[itemIndex];
+            } while (pickedPerks.Contains(picked));
+            pickedPerks.Add(picked);
+        }
+        UIManager.Instance.OpenPerksMenu(pickedPerks);
     }
 
 }

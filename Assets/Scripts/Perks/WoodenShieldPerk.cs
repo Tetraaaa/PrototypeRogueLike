@@ -5,18 +5,22 @@ using UnityEngine;
 public class WoodenShieldPerk : Perk
 {
     private float increasedBlockChance = 0.2f;
-    public WoodenShieldPerk(Player owner)
+    public WoodenShieldPerk()
     {
-        this.owner = owner;
         this.rarity = PerkRarity.Common;
-        this.owner.parryChance += increasedBlockChance;
+        image = Resources.Load<Sprite>("Perks/wooden_shield");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.parryChance += increasedBlockChance;
     }
 
     public override string Description
     {
         get
         {
-            return $"Augmente les chances de parer (après une esquive) de <color=red>{increasedBlockChance * 100f}</color>%";
+            return $"Bouclier en bois\n\nAugmente les chances de parer (après une esquive) de <color=green>{increasedBlockChance * 100f}</color>%";
 
         }
     }

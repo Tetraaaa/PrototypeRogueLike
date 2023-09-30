@@ -5,18 +5,22 @@ using UnityEngine;
 public class JudoBeltPerk : Perk
 {
     private float dodgeChanceGain = 0.05f;
-    public JudoBeltPerk(Player owner)
+    public JudoBeltPerk()
     {
-        this.owner = owner;
         this.rarity = PerkRarity.Common;
-        this.owner.dodgeChance += dodgeChanceGain;
+        image = Resources.Load<Sprite>("Perks/judo_belt");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.dodgeChance += dodgeChanceGain;
     }
 
     public override string Description
     {
         get
         {
-            return $"Augmente les chances d'esquive de {dodgeChanceGain*100f}%";
+            return $"Ceinture blanche de judo\n\nAugmente les chances d'esquive de <color=green>{dodgeChanceGain*100f}</color>%";
         }
     }
 }

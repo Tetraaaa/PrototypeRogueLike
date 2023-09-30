@@ -5,18 +5,22 @@ using UnityEngine;
 public class SteakPerk : Perk
 {
     private int maxHPGain = 20;
-    public SteakPerk(Player owner)
+    public SteakPerk()
     {
-        this.owner = owner;
-        this.owner.maxHP += maxHPGain;
         this.rarity = PerkRarity.Common;
+        image = Resources.Load<Sprite>("Perks/steak");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.maxHP += maxHPGain;
     }
 
     public override string Description
     {
         get
         {
-            return $"Augmente vos PV max de {maxHPGain}.";
+            return $"Steak saignant\n\nAugmente vos PV max de <color=green>{maxHPGain}</color>.";
         }
     }
 

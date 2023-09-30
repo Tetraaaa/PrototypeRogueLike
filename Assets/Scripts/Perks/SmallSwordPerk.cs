@@ -6,12 +6,15 @@ using UnityEngine;
 public class SmallSwordPerk : Perk
 {
     private float attackMultiplier = 0.2f;
-    public SmallSwordPerk(Player owner)
+    public SmallSwordPerk()
     {
-        this.owner = owner;
-        owner.attackMultiplier += 0.2f;
         rarity = PerkRarity.Common;
         image = Resources.Load<Sprite>("Perks/small_sword");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.attackMultiplier += 0.2f;
     }
 
     public override string Description

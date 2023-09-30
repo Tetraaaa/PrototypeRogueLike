@@ -5,11 +5,14 @@ using UnityEngine;
 public class FireFistsPerk:Perk
 {
     private int burningLevel = 1;
-    public FireFistsPerk(Player owner)
+    public FireFistsPerk()
     {
         this.rarity = PerkRarity.Uncommon;
-        this.owner = owner;
-        this.owner.OnHit += OnHit;
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.OnHit += OnHit;
     }
 
     public override string Description

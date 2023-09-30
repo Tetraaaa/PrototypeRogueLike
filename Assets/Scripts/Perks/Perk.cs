@@ -9,9 +9,16 @@ public abstract class Perk
     protected Player owner;
     public Sprite image;
 
+    public abstract void OnBuy(Player owner);
+
     public abstract string Description
     {
         get;
+    }
+
+    public override string ToString()
+    {
+        return GetType().Name + " (" + rarity + ")";
     }
 
 }

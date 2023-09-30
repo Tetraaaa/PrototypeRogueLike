@@ -6,11 +6,14 @@ public class ThunderFeetPerk:Perk
 {
     private int damage = 2;
 
-    public ThunderFeetPerk(Player owner)
+    public ThunderFeetPerk()
     {
         this.rarity = PerkRarity.Uncommon;
-        this.owner = owner;
-        this.owner.OnMove += OnMove;
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.OnMove += OnMove;
     }
 
     public override string Description

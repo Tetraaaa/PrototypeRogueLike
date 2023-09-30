@@ -20,10 +20,13 @@ public class UIManager : Singleton<UIManager>
         healthBar.UpdatePlayerHealth();
     }
 
-    public void OpenPerksMenu()
+    public void OpenPerksMenu(List<Perk> perks)
     {
         shopPanel.SetActive(true);
-        GameObject PerkCard = Instantiate(PerkPrefab, perksContainer.transform);
-        PerkCard.GetComponent<PerkCard>().ShowOnScreen(new EnergyDrinkPerk(GameManager.Instance.Player));
+        foreach (Perk perk in perks)
+        {
+            GameObject PerkCard = Instantiate(PerkPrefab, perksContainer.transform);
+            PerkCard.GetComponent<PerkCard>().ShowOnScreen(perk);
+        }
     }
 }

@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        perks.Add(new EnergyDrinkPerk(this));
         movePoint.parent = null;
         currentHp = maxHP;
     }

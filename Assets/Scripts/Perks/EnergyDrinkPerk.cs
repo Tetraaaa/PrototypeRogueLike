@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class EnergyDrinkPerk : Perk
 {
     private float healAmount = 0.25f;
-    public EnergyDrinkPerk(Player owner)
+    public EnergyDrinkPerk()
     {
         rarity = PerkRarity.Uncommon;
-        this.owner = owner;
-        owner.OnLowHealth += OnLowHealth;
         image = Resources.Load<Sprite>("Perks/energy_drink");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.OnLowHealth += OnLowHealth;
     }
 
 

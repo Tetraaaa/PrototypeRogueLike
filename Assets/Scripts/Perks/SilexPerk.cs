@@ -5,18 +5,22 @@ using UnityEngine;
 public class SilexPerk : Perk
 {
     private float bonusCritDamage = 0.1f;
-    public SilexPerk(Player owner)
+    public SilexPerk()
     {
         this.rarity = PerkRarity.Common;
-        this.owner = owner;
-        this.owner.critDamageMultiplier += bonusCritDamage;
+        image = Resources.Load<Sprite>("Perks/silex");
+    }
+
+    public override void OnBuy(Player owner)
+    {
+        owner.critDamageMultiplier += bonusCritDamage;
     }
 
     public override string Description
     {
         get
         {
-            return $"Augmente les dégâts infligés par les coups critiques de {bonusCritDamage * 100}%";
+            return $"Silex\n\nAugmente les dégâts infligés par les coups critiques de <color=green>{bonusCritDamage * 100}</color>%";
         }
     }
 }
