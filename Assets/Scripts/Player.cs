@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     private bool isHoldingKey = false;
     private bool turnEnded = false;
     private Color damageColor = new Color(240, 0, 0);
-    public int xpNeededForLevelUp = 50;
+    public int xpNeededForLevelUp = 35;
     public int level = 1;
     public GameTile CurrentTile = null;
     private bool lowHealthThresholdReached = false;
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         if (targetTile.entity)
         {
             bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
-            int attackDamage = attack;
+            int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
             targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, this);
             if(targetTile.entity != null)
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         if(xpNeededForLevelUp <= 0)
         {
             level++;
-            xpNeededForLevelUp += 50*level;
+            xpNeededForLevelUp += 35*level;
             FloatingTextManager.Instance.ShowLevelUpText(transform.position);
             SoundManager.Instance.LevelUp();
             GameManager.Instance.ChooseNewPerks();

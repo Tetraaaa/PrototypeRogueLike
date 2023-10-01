@@ -10,6 +10,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject perksContainer;
     public GameObject PerkPrefab;
 
+    private List<GameObject> perkCardsOnScreen = new List<GameObject>();
+
     public void Init()
     {
         healthBar.Init();
@@ -27,6 +29,17 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject PerkCard = Instantiate(PerkPrefab, perksContainer.transform);
             PerkCard.GetComponent<PerkCard>().ShowOnScreen(perk);
+            perkCardsOnScreen.Add(PerkCard);
         }
+    }
+
+    public void ClosePerksMenu()
+    {
+        shopPanel.SetActive(false);
+        foreach(GameObject perkCard in perkCardsOnScreen)
+        {
+            Destroy(perkCard);
+        }
+        UpdatePlayerHealth();
     }
 }

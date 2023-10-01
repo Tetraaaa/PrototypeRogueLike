@@ -41363,7 +41363,7 @@ MonoBehaviour:
   moveSpeed: 7
   XCoordinate: 0
   YCoordinate: 0
-  xpNeededForLevelUp: 50
+  xpNeededForLevelUp: 35
   level: 1
   maxHP: 20
   currentHp: 0
@@ -44458,7 +44458,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1484870530}
-  - component: {fileID: 1484870532}
   - component: {fileID: 1484870534}
   - component: {fileID: 1484870533}
   m_Layer: 5
@@ -44488,14 +44487,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -12.5}
   m_SizeDelta: {x: 0, y: -25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1484870532
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484870529}
-  m_CullTransparentMesh: 1
 --- !u!114 &1484870533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44837,7 +44828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1820631536
 RectTransform:
   m_ObjectHideFlags: 0

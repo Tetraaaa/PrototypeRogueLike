@@ -15,7 +15,6 @@ public abstract class Enemy : MonoBehaviour
     private Color damageColor = new Color(255, 255, 255);
     public GameTile CurrentTile = null;
     public GameTile? playerPosition;
-    public bool willAttackPlayerNextTurn = false;
     public List<Debuff> debuffs = new List<Debuff>();
 
     public Action OnTurnStart;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slime : Enemy
 {
+    private bool willAttackPlayerNextTurn = false;
     public override void Start()
     {
         base.Start();
@@ -13,9 +14,14 @@ public class Slime : Enemy
     public override void PlayTurn()
     {
         OnTurnStart?.Invoke();
-        if (playerPosition != null)
+        if(willAttackPlayerNextTurn)
         {
             HitPlayerIfStillThere();
+            willAttackPlayerNextTurn = false;
+        }
+        else if (playerPosition != null)
+        {
+            willAttackPlayerNextTurn = true;
         }
         else
         {

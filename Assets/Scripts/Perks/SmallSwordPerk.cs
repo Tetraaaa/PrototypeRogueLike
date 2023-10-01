@@ -21,7 +21,7 @@ public class SmallSwordPerk : Perk
     {
         get
         {
-            return $"Augmente les dégâts des attaques de <color=ff0000>{attackMultiplier * 100}</color>%";
+            return $"Petite Épée \n\nAugmente les dégâts des attaques de <color=green>{attackMultiplier * 100}</color>%";
         }
     }
 

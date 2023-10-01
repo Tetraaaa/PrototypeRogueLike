@@ -23,8 +23,10 @@ public class PerkCard : MonoBehaviour
 
     public void OnPointerDownDelegate(PointerEventData data)
     {
-        Debug.Log("g cliqué sur carte : " + Perk);
-    }     
+        GameManager.Instance.Player.perks.Add(Perk);
+        Perk.OnBuy(GameManager.Instance.Player);
+        UIManager.Instance.ClosePerksMenu();
+    }
 
 
     public void ShowOnScreen(Perk perk)

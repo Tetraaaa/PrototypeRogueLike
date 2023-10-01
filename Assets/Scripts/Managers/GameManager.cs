@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
         List<Perk> pickedPerks = new List<Perk>();
         while(pickedPerks.Count < 3)
         {
-            Perk picked = null;
+            Perk picked;
             do
             {
                 int itemIndex = Random.Range(0, defaultPerkPool.Count);
