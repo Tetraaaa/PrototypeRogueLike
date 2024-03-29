@@ -13,8 +13,6 @@ public class GameBoard
     {
         board = new Dictionary<Point, GameTile>();
         tilemap.CompressBounds(); 
-        //On place l'origine en haut à gauche (au lieu d'en bas à gauche) pour faciliter
-        tilemap.origin = new Vector3Int(-32, 31, 0);
 
         //En x, on va vers la droite donc de -32 à 31
         for (int x = -32, i = 0; x < 32; x++, i++)
