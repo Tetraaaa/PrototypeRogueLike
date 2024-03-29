@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     public void ChooseNewPerks()
     {
-        List<Perk> defaultPerkPool = new List<Perk>() { new SmallSwordPerk(), new GlassEyePerk(), new SteakPerk(), new JudoBeltPerk(), new WoodenShieldPerk(), new SilexPerk() };
+        List<Perk> defaultPerkPool = new List<Perk>() { new SmallSwordPerk(), new GlassEyePerk(), new SteakPerk(), new JudoBeltPerk(), new WoodenShieldPerk(), new SilexPerk(), new EnergyDrinkPerk(), new FireFistsPerk(), new ThunderFeetPerk() };
         List<Perk> pickedPerks = new List<Perk>();
         while(pickedPerks.Count < 3)
         {
