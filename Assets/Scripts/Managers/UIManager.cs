@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    public WaveCounter waveCounter;
     public HealthBar healthBar;
     public GameObject shopPanel;
     public GameObject perksContainer;
@@ -15,11 +16,17 @@ public class UIManager : Singleton<UIManager>
     public void Init()
     {
         healthBar.Init();
+        waveCounter.Init();
     }
 
     public void UpdatePlayerHealth()
     {
         healthBar.UpdatePlayerHealth();
+    }
+
+    public void UpdateCurrentWave()
+    {
+        waveCounter.UpdateWaveCounter();
     }
 
     public void OpenPerksMenu(List<Perk> perks)
