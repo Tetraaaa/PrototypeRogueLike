@@ -8,14 +8,21 @@ public class WaveManager : Singleton<WaveManager>
     private List<GameObject> EnemiesAlive = new List<GameObject>();
     public GameObject SlimePrefab;
     public GameObject SkeletonPrefab;
+    public GameObject KingSlimePrefab;
 
     public Action OnPlayTurn;
 
     private List<Wave> waves = new List<Wave>{
-        new Wave(new List<string>{"slime", "slime", "slime"}),
-        new Wave(new List<string>{"slime", "slime", "skeleton","slime", "slime"}),
-        new Wave(new List<string>{"slime", "skeleton", "skeleton","slime", "slime", "slime", "slime"}),
-        new Wave(new List<string>{ "skeleton", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton" }),
+        new Wave(new List<string>{"slime", "slime"}),
+        new Wave(new List<string>{"slime", "slime","slime", "slime"}),
+        new Wave(new List<string>{"slime", "slime", "slime", "skeleton"}),
+        new Wave(new List<string>{ "skeleton", "skeleton", "slime", "slime"}),
+        new Wave(new List<string>{ "skeleton", "skeleton", "slime", "slime", "slime", "slime"}),
+        new Wave(new List<string>{ "skeleton", "skeleton", "skeleton", "skeleton", "slime"}),
+        new Wave(new List<string>{ "skeleton", "skeleton", "skeleton", "slime", "slime", "slime", "slime",  "slime",  "slime" }),
+        new Wave(new List<string>{"slime", "skeleton", "skeleton","slime", "slime", "slime", "slime", "skeleton", "skeleton", "skeleton", "skeleton"}),
+        new Wave(new List<string>{"slime", "skeleton", "skeleton","slime", "slime", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton"}),
+        new Wave(new List<string>{"boss"})
     };
 
 
@@ -51,9 +58,13 @@ public class WaveManager : Singleton<WaveManager>
             {
                 nextSpawnPrefab = SlimePrefab;
             }
-            else
+            else if(enemyToSpawn == "skeleton")
             {
                 nextSpawnPrefab = SkeletonPrefab;
+            }
+            else
+            {
+                nextSpawnPrefab = KingSlimePrefab;
             }
             GameTile tile = GameManager.Instance.GameBoard.GetRandomEmptyCell();
             GameObject entity = Instantiate(nextSpawnPrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);

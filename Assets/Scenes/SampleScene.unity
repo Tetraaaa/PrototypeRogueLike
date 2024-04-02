@@ -44505,6 +44505,7 @@ MonoBehaviour:
   CurrentWave: 0
   SlimePrefab: {fileID: 5928083958422214388, guid: 41e8f14af9af3aa45958390a64dbe1f6, type: 3}
   SkeletonPrefab: {fileID: 5928083958422214388, guid: 46eefb7a4bede6843906bfa561d62c0e, type: 3}
+  KingSlimePrefab: {fileID: 5928083958422214388, guid: 8e89b072622682a4d85b056450a3496a, type: 3}
 --- !u!4 &1356994808
 Transform:
   m_ObjectHideFlags: 0

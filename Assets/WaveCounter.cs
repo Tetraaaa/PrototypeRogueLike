@@ -20,6 +20,13 @@ public class WaveCounter : MonoBehaviour
 
     public void UpdateWaveCounter()
     {
-        text.text = "Vague " + WaveManager.Instance.CurrentWave ;
+        if(WaveManager.Instance.CurrentWave == 10)
+        {
+            text.text = "Boss";
+        }
+        else
+        {
+            text.text = "Vague " + WaveManager.Instance.CurrentWave;
+        }
     }
 }
