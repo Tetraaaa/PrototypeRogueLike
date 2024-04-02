@@ -6,14 +6,19 @@ public class Skeleton : Enemy
 {
     //Ennemi au comportement fuyard : Si le joueur arrive à son Cac, il va choisir de fuir en priorité. Sinon, si le joueur est aligné avec lui, il lui lance un os (projectile qui parcourt une distance de scanRange max dans une direction fixe)
     private int scanRange = 5;
-    public GameObject Bone;
+    protected GameObject Bone;
     private int BoneCooldownInTurns = 3;
     private int CurrentBoneCooldown = 0;
+
+    public Skeleton()
+    {
+        attack = 6;
+        maxHP = 20;
+    }
 
     public override void Start()
     {
         base.Start();
-        attack = 6;
     }
 
     public override void PlayTurn()

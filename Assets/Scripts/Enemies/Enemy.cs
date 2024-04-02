@@ -8,9 +8,9 @@ public abstract class Enemy : MonoBehaviour
     public float moveSpeed = 7f;
 
 
-    private int maxHP = 20;
+    protected int maxHP = 20;
     private int currentHp;
-    public int attack = 2;
+    protected int attack = 2;
     public List<string> logs = new List<string>();
     private Color damageColor = new Color(255, 255, 255);
     public GameTile CurrentTile = null;
@@ -30,6 +30,11 @@ public abstract class Enemy : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+    }
+
+    public void SetAttack(int attack)
+    {
+        this.attack = attack;
     }
 
     public abstract void PlayTurn();

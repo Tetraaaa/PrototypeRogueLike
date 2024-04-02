@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5928083958422214391}
   - component: {fileID: 5928083958422214390}
-  - component: {fileID: 5928083958422214389}
   - component: {fileID: 5928083958422214384}
   - component: {fileID: 4631588020093545519}
   - component: {fileID: 5325264805668068424}
   - component: {fileID: 1270621551148867537}
+  - component: {fileID: 5775744686215706090}
   m_Layer: 0
   m_Name: KingSlime
   m_TagString: Enemy
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1514170661, guid: dd6163b61cf230143ac8e959a0c506d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -90,22 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5928083958422214389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5928083958422214388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7e6525d0ad4114a953bb79ab567220, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movePoint: {fileID: 1359465762242465842}
-  moveSpeed: 7
-  attack: 2
-  logs: []
 --- !u!61 &5928083958422214384
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4969,6 +4953,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5775744686215706090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5928083958422214388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b929289f917cb3142a61c7c1563f82a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePoint: {fileID: 1359465762242465842}
+  moveSpeed: 7
+  logs: []
+  ExplosionAttackWindUpSprite: {fileID: -1796381741, guid: dd6163b61cf230143ac8e959a0c506d5, type: 3}
 --- !u!1 &6318349506005140868
 GameObject:
   m_ObjectHideFlags: 0
