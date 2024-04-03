@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public Transform movePoint;
     public float moveSpeed = 7f;
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
             bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
             int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
-            targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, this);
+            targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject);
             if(targetTile.entity != null)
             {
                 OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>());
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
             bool playerParried = UnityEngine.Random.Range(0f, 100f) <= parryChance;
             if(playerParried)
             {
-                hitBy.TakeDamage(physicalDamage + (int)(damage*0.2f), this);
+                hitBy.TakeDamage(physicalDamage + (int)(damage*0.2f), gameObject);
                 FloatingTextManager.Instance.ShowFloatingText(transform.position, "PARRY !", Color.white);
             }
             return;

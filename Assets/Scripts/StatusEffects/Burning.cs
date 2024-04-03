@@ -18,7 +18,7 @@ public class Burning:Debuff
 
     public void OnTurnStart()
     {
-        target.TakeDamage(damage, GameManager.Instance.Player);
+        target.TakeDamage(damage, GameManager.Instance.Player.gameObject);
     }
 
     public void Remove()

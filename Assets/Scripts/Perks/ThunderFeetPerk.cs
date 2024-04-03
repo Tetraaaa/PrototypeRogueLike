@@ -30,7 +30,7 @@ public class ThunderFeetPerk:Perk
         foreach (GameTile neighbor in neighbors)
         {
             AnimationManager.Instance.ThunderFeet(neighbor.worldPos);
-            if (neighbor.entity) neighbor.entity.GetComponent<Enemy>().TakeDamage(damage, GameManager.Instance.Player);
+            if (neighbor.entity) neighbor.entity.GetComponent<Enemy>().TakeDamage(damage, GameManager.Instance.Player.gameObject);
         }
     }
 }

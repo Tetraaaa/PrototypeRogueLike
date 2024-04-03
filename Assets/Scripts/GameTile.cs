@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class GameTile
     public int gCost;
     public int hCost;
 
+
+    //Temporaire, déplacer dans une classe TileEffect quand un deuxième effet est dev
+    public Action<GameObject> OnWalkedOn;
 
     public GameTile Parent = null;
 

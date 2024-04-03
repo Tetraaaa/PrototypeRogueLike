@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Entity
 {
     public Transform movePoint;
     public float moveSpeed = 7f;
@@ -73,7 +73,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, Player attacker)
+    public void TakeDamage(int damage, GameObject attacker)
     {
         this.currentHp -= damage;
         SoundManager.Instance.Hit();
@@ -87,7 +87,7 @@ public abstract class Enemy : MonoBehaviour
             CurrentTile.entity = null;
             Destroy(movePoint.gameObject);
             WaveManager.Instance.RemoveEnemy(gameObject);
-            attacker.GainExp(10);
+            if (attacker.GetComponent<Player>() != null) attacker.GetComponent<Player>().GainExp(10);
         }
     }
 

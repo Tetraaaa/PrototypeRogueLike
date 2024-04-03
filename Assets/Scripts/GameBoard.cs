@@ -48,6 +48,7 @@ public class GameBoard
         if (!currentTile.entity) return;
         newTile.entity = currentTile.entity;
         currentTile.entity = null;
+        newTile.OnWalkedOn?.Invoke(newTile.entity);
     }
 
     public GameTile GetRandomEmptyCell()

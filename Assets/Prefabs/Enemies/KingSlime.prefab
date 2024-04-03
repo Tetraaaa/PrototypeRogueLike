@@ -4968,7 +4968,7 @@ MonoBehaviour:
   movePoint: {fileID: 1359465762242465842}
   moveSpeed: 7
   logs: []
-  ExplosionAttackWindUpSprite: {fileID: -1796381741, guid: dd6163b61cf230143ac8e959a0c506d5, type: 3}
+  CorruptedGroundPrefab: {fileID: 8083041458848918675, guid: e1b5e8a4af157e54dbd2ec220500ace7, type: 3}
 --- !u!1 &6318349506005140868
 GameObject:
   m_ObjectHideFlags: 0
