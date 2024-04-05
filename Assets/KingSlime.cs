@@ -9,9 +9,11 @@ public class KingSlime : Enemy
     private bool willAttackPlayerNextTurn = false;
 
     private bool WillExplodeNextTurn = false;
+    private bool WillSummonNextTurn = false;
     private Animator animator;
     public GameObject CorruptedGroundPrefab;
     public List<CorruptedTile> CorruptedTiles = new List<CorruptedTile>();
+
 
     public class CorruptedTile
     {
@@ -48,6 +50,12 @@ public class KingSlime : Enemy
             return;
         }
 
+        if (WillSummonNextTurn)
+        {
+            SummonAttack();
+            return;
+        }
+
         if (willAttackPlayerNextTurn)
         {
             HitPlayerIfStillThere();
@@ -56,7 +64,20 @@ public class KingSlime : Enemy
         else if (playerPosition != null)
         {
             //Le joueur est au cac : choisir quel sort lancer
-            ExplosionAttack();
+            switch (Random.Range(0, 2))
+            {
+                case 0:
+                    ExplosionAttack();
+                    break;
+                case 1:
+                    SummonAttack();
+                    break;
+                case 2:
+                    ExplosionAttack();
+                    break;
+                default:
+                    break;
+            }
             willAttackPlayerNextTurn = true;
         }
         else
@@ -95,6 +116,39 @@ public class KingSlime : Enemy
             WillExplodeNextTurn = true;
             animator.SetBool("WillCastExplosionNextTurn", true);
         }
+    }
+
+    public void SummonAttack()
+    {
+        if (WillSummonNextTurn)
+        {
+            WillSummonNextTurn = false;
+            animator.SetBool("WillSummonNextTurn", false);
+            List<GameTile> adjacentTiles = GameManager.Instance.GameBoard.GetNeighborsAndDiagonals(GameManager.Instance.Player.CurrentTile);
+            List<GameTile> pickedTiles = new List<GameTile>();
+            while (adjacentTiles.Count > 0 && pickedTiles.Count < 2)
+            {
+                GameTile picked = adjacentTiles[Random.Range(0, adjacentTiles.Count)];
+                if(picked.hasCollision || picked.entity != null)
+                {
+                    adjacentTiles.Remove(picked);
+                }
+                else
+                {
+                    pickedTiles.Add(picked);
+                }
+            }
+            foreach (var tile in pickedTiles)
+            {
+                WaveManager.Instance.Summon("slime", tile);
+            }
+        }
+        else
+        {
+            WillSummonNextTurn = true;
+            animator.SetBool("WillSummonNextTurn", true);
+        }
+
     }
 
     public void CheckCorruptedTiles()

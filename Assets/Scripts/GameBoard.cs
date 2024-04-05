@@ -74,6 +74,18 @@ public class GameBoard
         return neighbors;
     }
 
+    public List<GameTile> GetNeighborsAndDiagonals(GameTile tile)
+    {
+        List<GameTile> neighbors = GetNeighbors(tile);
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x - 1, tile.y - 1));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x + 1, tile.y - 1));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x - 1, tile.y + 1));
+        neighbors.Add(GameManager.Instance.GameBoard.Get(tile.x + 1, tile.y + 1)) ;
+        neighbors.RemoveAll(x => x == null);
+        return neighbors;
+    }
+
+
     public GameTile GetAdjacent(GameTile tile, ProjectileDirection direction)
     {
         switch (direction)

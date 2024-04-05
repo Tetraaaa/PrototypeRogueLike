@@ -12,7 +12,7 @@ public class Player : Entity
     private bool isHoldingKey = false;
     private bool turnEnded = false;
     private Color damageColor = new Color(240, 0, 0);
-    public int xpNeededForLevelUp = 35;
+    public int xpNeededForLevelUp = 10;
     public int level = 1;
     public GameTile CurrentTile = null;
     private bool lowHealthThresholdReached = false;

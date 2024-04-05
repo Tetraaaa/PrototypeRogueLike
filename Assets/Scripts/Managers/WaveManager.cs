@@ -22,7 +22,7 @@ public class WaveManager : Singleton<WaveManager>
         new Wave(new List<string>{ "skeleton", "skeleton", "skeleton", "slime", "slime", "slime", "slime",  "slime",  "slime" }),
         new Wave(new List<string>{"slime", "skeleton", "skeleton","slime", "slime", "slime", "slime", "skeleton", "skeleton", "skeleton", "skeleton"}),
         new Wave(new List<string>{"slime", "skeleton", "skeleton","slime", "slime", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton", "skeleton"}),
-        new Wave(new List<string>{"boss"})
+        new Wave(new List<string>{"king_slime"})
     };
 
 
@@ -50,29 +50,38 @@ public class WaveManager : Singleton<WaveManager>
     {
         CurrentWave++;
         Wave currentEnemyWave = waves[CurrentWave-1];
-        GameObject nextSpawnPrefab;
 
         foreach (string enemyToSpawn in currentEnemyWave.mobs)
         {
-            if (enemyToSpawn == "slime")
-            {
-                nextSpawnPrefab = SlimePrefab;
-            }
-            else if(enemyToSpawn == "skeleton")
-            {
-                nextSpawnPrefab = SkeletonPrefab;
-            }
-            else
-            {
-                nextSpawnPrefab = KingSlimePrefab;
-            }
-            GameTile tile = GameManager.Instance.GameBoard.GetRandomEmptyCell();
-            GameObject entity = Instantiate(nextSpawnPrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
-            tile.entity = entity;
-            entity.GetComponent<Enemy>().CurrentTile = tile;
-            EnemiesAlive.Add(entity);
+            Summon(enemyToSpawn, GameManager.Instance.GameBoard.GetRandomEmptyCell());
         }
         UIManager.Instance.UpdateCurrentWave();
+    }
+
+    public void Summon(string enemyName, GameTile tile)
+    {
+        GameObject nextSpawnPrefab = null;
+
+        switch (enemyName) {
+            case "slime":
+                nextSpawnPrefab = SlimePrefab;
+                break;
+            case "skeleton":
+                nextSpawnPrefab = SkeletonPrefab;
+                break;
+            case "king_slime":
+                nextSpawnPrefab= KingSlimePrefab;
+                break;
+            default: 
+                break;
+        }
+
+        if (!nextSpawnPrefab) return;
+
+        GameObject entity = Instantiate(nextSpawnPrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
+        tile.entity = entity;
+        entity.GetComponent<Enemy>().CurrentTile = tile;
+        EnemiesAlive.Add(entity);
     }
 
     public void PlayEnemiesTurn()
