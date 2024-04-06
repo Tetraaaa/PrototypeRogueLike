@@ -20,7 +20,7 @@ public class GlassEyePerk : Perk
     {
         get
         {
-            return $"Oeil de verre\n\nAugmente les chances de coup critique de <color=red>{bonusCritChance * 100}</color>%";
+            return $"Oeil de verre\n\nAugmente les chances de coup critique de <color=green>{bonusCritChance * 100}</color>%";
         }
     }
 }
