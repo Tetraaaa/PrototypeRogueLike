@@ -13,12 +13,13 @@ public class GameManager : Singleton<GameManager>
     public Player Player;
     public GameBoard GameBoard;
     public Tilemap tilemap;
+    public Tilemap collidersLayer;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = PlayerGameObject.GetComponent<Player>();
-        GameBoard = new GameBoard(tilemap);
+        GameBoard = new GameBoard(tilemap, collidersLayer);
         SetPlayerStartingPos();
         HomeMadePathfinder.Init(GameBoard);
         UIManager.Instance.Init();

@@ -8,11 +8,15 @@ using System.Drawing;
 public class GameBoard
 {
     public Dictionary<Point, GameTile> board;
+    public Tilemap tilemap;
+    public Tilemap collidersLayer;
 
-    public GameBoard(Tilemap tilemap)
+    public GameBoard(Tilemap tilemap, Tilemap collidersLayer)
     {
+        this.tilemap = tilemap;
+        this.collidersLayer = collidersLayer;
         board = new Dictionary<Point, GameTile>();
-        tilemap.CompressBounds(); 
+        collidersLayer.CompressBounds(); 
 
         //En x, on va vers la droite donc de -32 à 31
         for (int x = -32, i = 0; x < 32; x++, i++)
@@ -20,7 +24,7 @@ public class GameBoard
             //En y, on va en bas donc de 31 à -32
             for (int y = 31, j = 0; y >= -32; y--, j--)
             {
-                board.Add(new Point(i,j), new GameTile(i, j, x, y, tilemap.HasTile(new Vector3Int(x, y, 0))));
+                board.Add(new Point(i,j), new GameTile(i, j, x, y, collidersLayer.HasTile(new Vector3Int(x, y, 0))));
             }
         }
     }
@@ -74,6 +78,13 @@ public class GameBoard
         return neighbors;
     }
 
+    public List<GameTile> GetEmptyNeighbors(GameTile tile)
+    {
+        List<GameTile> neighbors = GetNeighbors(tile);
+        neighbors.RemoveAll(x => !x.IsWalkable);
+        return neighbors;
+    }
+
     public List<GameTile> GetNeighborsAndDiagonals(GameTile tile)
     {
         List<GameTile> neighbors = GetNeighbors(tile);
@@ -119,6 +130,11 @@ public class GameBoard
     public GameTile Right(GameTile tile)
     {
         return Get(tile.x + 1, tile.y);
+    }
+
+    public double GetDistance(GameTile tileA, GameTile tileB)
+    {
+        return Math.Sqrt(Math.Pow(tileA.x - tileB.x, 2) + Math.Pow(tileA.y - tileB.y, 2));
     }
 }
 

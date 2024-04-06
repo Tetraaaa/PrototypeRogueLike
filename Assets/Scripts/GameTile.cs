@@ -7,8 +7,8 @@ public class GameTile
 {
     public int x;
     public int y;
-    private int tilesetX;
-    private int tilesetY;
+    public int tilesetX;
+    public int tilesetY;
     public Vector3 worldPos;
     public GameObject? entity = null;
     public bool hasCollision = false;

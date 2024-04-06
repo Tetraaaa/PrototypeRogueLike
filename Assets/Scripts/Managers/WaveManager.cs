@@ -58,7 +58,7 @@ public class WaveManager : Singleton<WaveManager>
         UIManager.Instance.UpdateCurrentWave();
     }
 
-    public void Summon(string enemyName, GameTile tile)
+    public GameObject Summon(string enemyName, GameTile tile)
     {
         GameObject nextSpawnPrefab = null;
 
@@ -76,12 +76,13 @@ public class WaveManager : Singleton<WaveManager>
                 break;
         }
 
-        if (!nextSpawnPrefab) return;
+        if (!nextSpawnPrefab) return null;
 
         GameObject entity = Instantiate(nextSpawnPrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity, null);
         tile.entity = entity;
         entity.GetComponent<Enemy>().CurrentTile = tile;
         EnemiesAlive.Add(entity);
+        return entity;
     }
 
     public void PlayEnemiesTurn()
