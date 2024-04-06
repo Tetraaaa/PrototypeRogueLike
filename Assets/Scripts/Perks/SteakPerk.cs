@@ -14,6 +14,7 @@ public class SteakPerk : Perk
     public override void OnBuy(Player owner)
     {
         owner.maxHP += maxHPGain;
+        owner.currentHp += maxHPGain;
     }
 
     public override string Description
