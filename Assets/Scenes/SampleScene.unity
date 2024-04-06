@@ -41362,7 +41362,7 @@ MonoBehaviour:
   moveSpeed: 7
   XCoordinate: 0
   YCoordinate: 0
-  xpNeededForLevelUp: 35
+  xpNeededForLevelUp: 10
   level: 1
   maxHP: 20
   currentHp: 0
@@ -42366,26 +42366,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: 8, y: -6, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 13, y: -6, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 14, y: -6, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -44067,7 +44047,7 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 96
+  - m_RefCount: 94
     m_Data: {fileID: 11400000, guid: 5e98147fe93f99b4b98942f6e8db7a5d, type: 2}
   - m_RefCount: 55
     m_Data: {fileID: 11400000, guid: a1e6ed9c6171e9f4d9a79477f76060ee, type: 2}
@@ -44082,7 +44062,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: e58af327e4959aa44ba577586cbf263b, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 96
+  - m_RefCount: 94
     m_Data: {fileID: 1563615692, guid: 19a922b360b9f3c4990d2f1d88e5925a, type: 3}
   - m_RefCount: 55
     m_Data: {fileID: -794182582, guid: 19a922b360b9f3c4990d2f1d88e5925a, type: 3}
@@ -44097,7 +44077,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -53984900, guid: 19a922b360b9f3c4990d2f1d88e5925a, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 191
+  - m_RefCount: 189
     m_Data:
       e00: 1
       e01: 0
@@ -44116,7 +44096,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 191
+  - m_RefCount: 189
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -44421,7 +44401,8 @@ MonoBehaviour:
   ThunderFeetAnimation: {fileID: 8083041458848918675, guid: 4b980f1a668d72d49a91d89613f8a2cb, type: 3}
   PlayerGameObject: {fileID: 323529084}
   Player: {fileID: 0}
-  tilemap: {fileID: 996243402}
+  tilemap: {fileID: 49415510}
+  collidersLayer: {fileID: 996243402}
 --- !u!4 &1314569960
 Transform:
   m_ObjectHideFlags: 0

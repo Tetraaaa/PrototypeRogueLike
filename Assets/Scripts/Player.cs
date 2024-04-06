@@ -149,7 +149,7 @@ public class Player : Entity
         if(xpNeededForLevelUp <= 0)
         {
             level++;
-            xpNeededForLevelUp += 35*level;
+            xpNeededForLevelUp += 15*level;
             FloatingTextManager.Instance.ShowLevelUpText(transform.position);
             SoundManager.Instance.LevelUp();
             GameManager.Instance.ChooseNewPerks();
