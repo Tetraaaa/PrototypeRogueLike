@@ -29,7 +29,7 @@ public class Bone : Enemy
                 GameManager.Instance.Player.TakeDamage(attack, thrower);
                 Remove();
             }
-            else if (!targetTile.IsWalkable())
+            else if (!targetTile.IsWalkable)
             {
                 Remove();
             }

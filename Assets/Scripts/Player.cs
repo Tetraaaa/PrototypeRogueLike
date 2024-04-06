@@ -104,7 +104,7 @@ public class Player : Entity
         }
         else
         {
-            if (!targetTile.IsWalkable()) return;
+            if (!targetTile.IsWalkable) return;
             movePoint.position = targetTile.worldPos;
             GameManager.Instance.GameBoard.MoveEntity(CurrentTile, targetTile);
             CurrentTile = targetTile;

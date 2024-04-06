@@ -50,7 +50,7 @@ public class HomeMadePathfinder : MonoBehaviour
 
             foreach (GameTile neighbor in Board.GetNeighbors(currentNode))
             {
-                if(!neighbor.IsWalkable() || closedSet.Contains(neighbor))
+                if(!neighbor.IsWalkable || closedSet.Contains(neighbor))
                 {
                     continue;
                 }

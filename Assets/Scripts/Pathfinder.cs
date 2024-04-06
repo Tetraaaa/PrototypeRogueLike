@@ -41,7 +41,7 @@ public static class PathFinder
 
             foreach (var neighbor in GetNeighbors(currentTile))
             {
-                if (!neighbor.IsWalkable() || visited.Contains(neighbor))
+                if (!neighbor.IsWalkable || visited.Contains(neighbor))
                 {
                     continue;
                 }
@@ -86,7 +86,7 @@ public static class PathFinder
 
             foreach (GameTile neighbor in GetNeighbors(currentTile))
             {
-                if (!neighbor.IsWalkable() || closedSet.Contains(neighbor))
+                if (!neighbor.IsWalkable || closedSet.Contains(neighbor))
                 {
                     continue;
                 }

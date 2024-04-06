@@ -84,7 +84,7 @@ public class Skeleton : Enemy
         playerPosition = null;
         GameTile spawnTile = GameManager.Instance.GameBoard.GetAdjacent(CurrentTile, boneDirection);
 
-        if (spawnTile == null ||  !spawnTile.IsWalkable()) return;
+        if (spawnTile == null ||  !spawnTile.IsWalkable) return;
 
         GameObject boneGameObject = Instantiate(Bone, spawnTile.worldPos, Quaternion.identity, null);
         Bone bone = boneGameObject.GetComponent<Bone>();

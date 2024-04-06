@@ -57,7 +57,7 @@ public class GameBoard
         do
         {
             tile = board.ElementAt(UnityEngine.Random.Range(0, board.Count)).Value;
-        } while (tile.hasCollision || tile.entity != null);
+        } while (!tile.IsWalkable);
 
         return tile;
     }

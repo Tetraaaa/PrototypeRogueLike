@@ -40,15 +40,18 @@ public class GameTile
         }
     }
 
-    public bool IsWalkable()
+    public bool IsWalkable
     {
-        if (ignoreAllCollisions) return true;
-        return !hasCollision && entity == null;
+        get
+        {
+            if (ignoreAllCollisions) return true;
+            return !hasCollision && entity == null;
+        }
     }
 
     public override string ToString()
     {
-        return "T( " + x + ";" + y + ")" + ",walkable:" + IsWalkable();
+        return "T( " + x + ";" + y + ")" + ",walkable:" + IsWalkable;
     }
 
 
