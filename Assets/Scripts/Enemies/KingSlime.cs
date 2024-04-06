@@ -7,8 +7,6 @@ using static KingSlime;
 
 public class KingSlime : Enemy
 {
-    private bool willAttackPlayerNextTurn = false;
-
     private bool WillExplodeNextTurn = false;
     private bool WillSummonNextTurn = false;
     private bool WillHitNextTurn = false;
@@ -17,7 +15,10 @@ public class KingSlime : Enemy
 
     private Animator animator;
     public GameObject CorruptedGroundPrefab;
+    public GameObject SlimeMinePrefab;
     public List<CorruptedTile> CorruptedTiles = new List<CorruptedTile>();
+
+    public List<SlimeMinedTile> SlimeMinedTiles = new List<SlimeMinedTile>();
 
 
     public class CorruptedTile
@@ -33,9 +34,20 @@ public class KingSlime : Enemy
         }
     }
 
+    public class SlimeMinedTile
+    {
+        public GameTile tile;
+        public GameObject effectPrefab;
+        public SlimeMinedTile(GameTile tile, GameObject effectPrefab)
+        {
+            this.tile = tile;
+            this.effectPrefab = effectPrefab;
+        }
+    }
+
     public KingSlime()
     {
-        attack = 5;
+        attack = 6;
         maxHP = 100;
     }
     public override void Start()
@@ -48,6 +60,7 @@ public class KingSlime : Enemy
     {
         OnTurnStart?.Invoke();
         CheckCorruptedTiles();
+        ExplodeSlimeMines();
 
         if (WillExplodeNextTurn)
         {
@@ -137,7 +150,7 @@ public class KingSlime : Enemy
         if(WillExplodeNextTurn)
         {
             animator.SetBool("WillCastExplosionNextTurn", false);
-            List<GameTile> adjacentTiles = GameManager.Instance.GameBoard.GetNeighborsAndDiagonals(CurrentTile);
+            List<GameTile> adjacentTiles = GameManager.Instance.GameBoard.GetNeighbors(CurrentTile);
             if(adjacentTiles.Contains(GameManager.Instance.Player.CurrentTile))
             {
                 GameManager.Instance.Player.TakeDamage(attack * 2, this);
@@ -197,6 +210,10 @@ public class KingSlime : Enemy
 
     }
 
+    /// <summary>
+    /// Après une canalisation de 1 tour, invoque des mines tout autour du joueur, sauf sur une case au hasard
+    /// Les mines explosent au tour suivant, infligeant attaque*1 de dégâts au joueur si il est toujours dessus
+    /// </summary>
     public void HitAttack()
     {
         if (WillHitNextTurn)
@@ -220,8 +237,7 @@ public class KingSlime : Enemy
 
             foreach (GameTile tile in tilesAroundPlayer)
             {
-                GameManager.Instance.GameBoard.tilemap.SetTileFlags(new Vector3Int(tile.tilesetX, tile.tilesetY), TileFlags.None);
-                GameManager.Instance.GameBoard.tilemap.SetColor(new Vector3Int(tile.tilesetX, tile.tilesetY), Color.red);
+                SlimeMinedTiles.Add(new SlimeMinedTile(tile, Instantiate(SlimeMinePrefab, new Vector3Int(tile.x, tile.y), Quaternion.identity, null)));
             }
 
             while (adjacentTilesAroundPlayer.Count > 0 && pickedTile == null)
@@ -274,5 +290,21 @@ public class KingSlime : Enemy
     public void OnSummonedSlimeDeath()
     {
         slimesSummonedAndAlive -= 1;
+    }
+
+    public void ExplodeSlimeMines()
+    {
+        if (SlimeMinedTiles.Find(t => t.tile == GameManager.Instance.Player.CurrentTile) != null)
+        {
+            GameManager.Instance.Player.TakeDamage((int)(attack * 1), this);
+        }
+
+        foreach (var tile in SlimeMinedTiles)
+        {
+            //On anime l'explosion des mines, les prefabs se suppriment tout seuls quand l'anim est terminée
+            tile.effectPrefab.GetComponent<Animator>().enabled = true;
+        }
+
+        SlimeMinedTiles.Clear();
     }
 }

@@ -4969,6 +4969,7 @@ MonoBehaviour:
   moveSpeed: 7
   logs: []
   CorruptedGroundPrefab: {fileID: 8083041458848918675, guid: e1b5e8a4af157e54dbd2ec220500ace7, type: 3}
+  SlimeMinePrefab: {fileID: 8083041458848918675, guid: 4fc8449d850ce694bac684ee9aa2e783, type: 3}
 --- !u!1 &6318349506005140868
 GameObject:
   m_ObjectHideFlags: 0
