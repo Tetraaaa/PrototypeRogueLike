@@ -9,6 +9,7 @@ public class ThunderFeetPerk:Perk
     public ThunderFeetPerk()
     {
         this.rarity = PerkRarity.Uncommon;
+        image = Resources.Load<Sprite>("Perks/thunder_feet");
     }
 
     public override void OnBuy(Player owner)
@@ -20,7 +21,7 @@ public class ThunderFeetPerk:Perk
     {
         get
         {
-            return $"Lorsque vous vous déplacez, le sol autour de vous s'électrise, infligeant {damage} points de dégâts aux cases adjacentes";
+            return $"Bottes de foudre\n\nLorsque vous vous déplacez, le sol autour de vous s'électrise, infligeant <color=green>{damage}</color> points de dégâts aux cases adjacentes";
         }
     }
 
