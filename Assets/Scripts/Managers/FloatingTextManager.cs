@@ -14,11 +14,12 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
         floatingDamage.gameObject.SetActive(true);
     }
 
-    public void ShowFloatingText(Vector3 position, string text, Color color)
+    public FloatingDamage ShowFloatingText(Vector3 position, string text, Color color)
     {
         FloatingDamage floatingDamage = Instantiate(FloatingDamagePrefab, position, Quaternion.identity, null);
         floatingDamage.SetText(text, color);
         floatingDamage.gameObject.SetActive(true);
+        return floatingDamage;
     }
 
     public void ShowLevelUpText(Vector3 position)

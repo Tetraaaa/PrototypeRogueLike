@@ -127,13 +127,14 @@ public class Player : Entity
         bool playerDodged = UnityEngine.Random.Range(0f, 100f) <= dodgeChance;
         if(playerDodged)
         {
-            //TODO : Jouer le son du dodge
-            FloatingTextManager.Instance.ShowFloatingText(transform.position, "DODGE", Color.white);
+            SoundManager.Instance.Dodge();
+            var dodgeText = FloatingTextManager.Instance.ShowFloatingText(transform.position, "ESQUIVÉ", Color.white);
             bool playerParried = UnityEngine.Random.Range(0f, 100f) <= parryChance;
             if(playerParried)
             {
+                Destroy(dodgeText.gameObject);
                 hitBy.TakeDamage(physicalDamage + (int)(damage*0.2f), gameObject);
-                FloatingTextManager.Instance.ShowFloatingText(transform.position, "PARRY !", Color.white);
+                FloatingTextManager.Instance.ShowFloatingText(transform.position + Vector3.forward, "PARÉ !", Color.white);
             }
             return;
         }
