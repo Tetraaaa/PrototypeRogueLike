@@ -7,6 +7,7 @@ public class SoundManager : Singleton<SoundManager>
     private AudioSource audioSource;
     public AudioClip hitSound;
     public AudioClip levelUpSound;
+    public AudioClip slimeWindUpSound;
     public void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -20,5 +21,10 @@ public class SoundManager : Singleton<SoundManager>
     public void LevelUp()
     {
         audioSource.PlayOneShot(levelUpSound);
+    }
+
+    public void SlimeWindUp()
+    {
+        audioSource.PlayOneShot(slimeWindUpSound);
     }
 }

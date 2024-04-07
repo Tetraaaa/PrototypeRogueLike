@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static KingSlime;
 
 public class KingSlime : Enemy
 {
@@ -13,7 +12,6 @@ public class KingSlime : Enemy
 
     private int slimesSummonedAndAlive = 0;
 
-    private Animator animator;
     public GameObject CorruptedGroundPrefab;
     public GameObject SlimeMinePrefab;
     public List<CorruptedTile> CorruptedTiles = new List<CorruptedTile>();
@@ -53,7 +51,6 @@ public class KingSlime : Enemy
     public override void Start()
     {
         base.Start();
-        animator = GetComponent<Animator>();
     }
 
     public override void PlayTurn()

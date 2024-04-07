@@ -7,6 +7,7 @@ public abstract class Enemy : Entity
     public Transform movePoint;
     public float moveSpeed = 7f;
 
+    protected Animator animator;
 
     protected int maxHP = 20;
     private int currentHp;
@@ -24,6 +25,7 @@ public abstract class Enemy : Entity
     {
         movePoint.parent = null;
         currentHp = maxHP;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame

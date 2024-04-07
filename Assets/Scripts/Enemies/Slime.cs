@@ -18,10 +18,13 @@ public class Slime : Enemy
         {
             HitPlayerIfStillThere();
             willAttackPlayerNextTurn = false;
+            animator.SetBool("WillAttackPlayerNextTurn", false);
         }
         else if (playerPosition != null)
         {
             willAttackPlayerNextTurn = true;
+            animator.SetBool("WillAttackPlayerNextTurn", true);
+            SoundManager.Instance.SlimeWindUp();
         }
         else
         {
