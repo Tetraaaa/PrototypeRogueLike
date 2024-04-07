@@ -153,6 +153,7 @@ public class Player : Entity
             FloatingTextManager.Instance.ShowLevelUpText(transform.position);
             SoundManager.Instance.LevelUp();
             GameManager.Instance.ChooseNewPerks();
+            UIManager.Instance.UpdatePlayerLevel();
         }
     }
 

@@ -7,6 +7,7 @@ public class UIManager : Singleton<UIManager>
 {
     public WaveCounter waveCounter;
     public HealthBar healthBar;
+    public LevelCounter levelCounter;
     public GameObject shopPanel;
     public GameObject perksContainer;
     public GameObject PerkPrefab;
@@ -17,6 +18,7 @@ public class UIManager : Singleton<UIManager>
     {
         healthBar.Init();
         waveCounter.Init();
+        levelCounter.Init();
     }
 
     public void UpdatePlayerHealth()
@@ -27,6 +29,11 @@ public class UIManager : Singleton<UIManager>
     public void UpdateCurrentWave()
     {
         waveCounter.UpdateWaveCounter();
+    }
+
+    public void UpdatePlayerLevel()
+    {
+        levelCounter.UpdateLevelCounter();
     }
 
     public void OpenPerksMenu(List<Perk> perks)
