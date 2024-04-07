@@ -32,7 +32,7 @@ public class Player : Entity
     public Action<GameTile> OnMove;
     public Action<Enemy, ProjectileDirection> OnBeforeHit;
     public Action<Enemy, ProjectileDirection> OnHit;
-    public Action OnAfterHit;
+    public Action<bool, GameTile> OnAfterHit;
 
     public Action OnLowHealth;
 
@@ -102,12 +102,12 @@ public class Player : Entity
             bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
             int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
-            targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject);
+            bool enemyDies = targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject);
             if(targetTile.entity != null)
             {
                 OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
             }
-            OnAfterHit?.Invoke();
+            OnAfterHit?.Invoke(enemyDies, targetTile);
             turnEnded = true;
         }
         else

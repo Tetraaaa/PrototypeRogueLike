@@ -31,7 +31,7 @@ public class RiggedDicePerk : Perk
         GameManager.Instance.Player.attackMultiplier *= RNG.Range(0.5f, 2f);
     }
 
-    public void OnAfterHit()
+    public void OnAfterHit(bool isEnemyDead, GameTile tileHit)
     {
         GameManager.Instance.Player.attackMultiplier = multiplierBeforeHit;
     }

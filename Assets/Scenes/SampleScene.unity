@@ -44156,6 +44156,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: e218765cbd13e6b42acbfcd295e52cd7, type: 3}
   levelUpSound: {fileID: 8300000, guid: 29387933f9e8dad4abf3f42c930971ab, type: 3}
   slimeWindUpSound: {fileID: 8300000, guid: 76708fb0e8cb2f84d90ad5be391f31e1, type: 3}
+  forbiddenArtsSound: {fileID: 8300000, guid: 7cdbdc7057d91ae4cb1bb8cae2ca7933, type: 3}
 --- !u!4 &1123255011
 Transform:
   m_ObjectHideFlags: 0
@@ -45047,6 +45048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThunderFeetAnimation: {fileID: 8083041458848918675, guid: 4b980f1a668d72d49a91d89613f8a2cb, type: 3}
+  ForbiddenArtsAnimation: {fileID: 8083041458848918675, guid: 2dadf32e1013781479b700f1bd808750, type: 3}
 --- !u!4 &1714815321
 Transform:
   m_ObjectHideFlags: 0

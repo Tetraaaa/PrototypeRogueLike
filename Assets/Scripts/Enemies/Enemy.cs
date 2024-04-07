@@ -75,13 +75,12 @@ public abstract class Enemy : Entity
         }
     }
 
-    public void TakeDamage(int damage, GameObject attacker)
+    public bool TakeDamage(int damage, GameObject attacker)
     {
         this.currentHp -= damage;
         SoundManager.Instance.Hit();
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
         GetComponent<ParticleSystem>().Play();
-
 
         if (currentHp <= 0)
         {
@@ -90,7 +89,10 @@ public abstract class Enemy : Entity
             Destroy(movePoint.gameObject);
             WaveManager.Instance.RemoveEnemy(gameObject);
             if (attacker.GetComponent<Player>() != null) attacker.GetComponent<Player>().GainExp(10);
+            return true;
         }
+
+        return false;
     }
 
     public override string ToString()
