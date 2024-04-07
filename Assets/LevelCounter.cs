@@ -9,7 +9,6 @@ public class LevelCounter : MonoBehaviour
 
     public void Init()
     {
-        UpdateLevelCounter();
     }
 
     // Start is called before the first frame update
