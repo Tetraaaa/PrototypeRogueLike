@@ -12,6 +12,13 @@ public class UIManager : Singleton<UIManager>
     public GameObject perksContainer;
     public GameObject PerkPrefab;
 
+    //Illustrations des cartes
+    public Sprite commonCardImage;
+    public Sprite uncommonCardImage;
+    public Sprite mythicCardImage;
+    public Sprite exoticCardImage;
+    public Sprite corruptedCardImage;
+
     private List<GameObject> perkCardsOnScreen = new List<GameObject>();
 
     public void Init()
@@ -42,6 +49,25 @@ public class UIManager : Singleton<UIManager>
         foreach (Perk perk in perks)
         {
             GameObject PerkCard = Instantiate(PerkPrefab, perksContainer.transform);
+            var perkCardImage = PerkCard.GetComponent<Image>();
+            switch (perk.Rarity)
+            {
+                case PerkRarity.Uncommon:
+                    perkCardImage.sprite = uncommonCardImage;
+                    break;
+                case PerkRarity.Mythic:
+                    perkCardImage.sprite= mythicCardImage;
+                    break;
+                case PerkRarity.Exotic:
+                    perkCardImage.sprite = exoticCardImage;
+                    break;
+                case PerkRarity.Corrupted:
+                    perkCardImage.sprite = corruptedCardImage;
+                    break;
+                default:
+                    perkCardImage.sprite = commonCardImage;
+                    break;
+            }
             PerkCard.GetComponent<PerkCard>().ShowOnScreen(perk);
             perkCardsOnScreen.Add(PerkCard);
         }

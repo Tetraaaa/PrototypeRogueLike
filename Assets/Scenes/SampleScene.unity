@@ -41758,6 +41758,11 @@ MonoBehaviour:
   shopPanel: {fileID: 1820631535}
   perksContainer: {fileID: 636114628}
   PerkPrefab: {fileID: 2084136316631386869, guid: 7986117ef74be54499711142a15a84e0, type: 3}
+  commonCardImage: {fileID: 21300000, guid: fc13fe9b9c0b84c4f907ba90ebf828da, type: 3}
+  uncommonCardImage: {fileID: 21300000, guid: b4cc9d09826460540b214ceb76f54318, type: 3}
+  mythicCardImage: {fileID: 21300000, guid: 3d037038533fdc942a9eda1cfd3744d7, type: 3}
+  exoticCardImage: {fileID: 21300000, guid: c7bf260a8f7336a48a7c2afffd4cc9fa, type: 3}
+  corruptedCardImage: {fileID: 21300000, guid: 66162f19d19f77d4b98f5061e1a6e92e, type: 3}
 --- !u!4 &613642845
 Transform:
   m_ObjectHideFlags: 0

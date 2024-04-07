@@ -11,6 +11,8 @@ public abstract class Perk
 
     public abstract void OnBuy(Player owner);
 
+    public PerkRarity Rarity { get { return rarity; } }
+
     public abstract string Description
     {
         get;
