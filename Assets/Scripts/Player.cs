@@ -30,7 +30,10 @@ public class Player : Entity
 
     //Events
     public Action<GameTile> OnMove;
+    public Action<Enemy, ProjectileDirection> OnBeforeHit;
     public Action<Enemy, ProjectileDirection> OnHit;
+    public Action OnAfterHit;
+
     public Action OnLowHealth;
 
     public List<Perk> perks = new List<Perk>();
@@ -95,6 +98,7 @@ public class Player : Entity
 
         if (targetTile.entity)
         {
+            OnBeforeHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
             bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
             int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
@@ -103,6 +107,7 @@ public class Player : Entity
             {
                 OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
             }
+            OnAfterHit?.Invoke();
             turnEnded = true;
         }
         else
