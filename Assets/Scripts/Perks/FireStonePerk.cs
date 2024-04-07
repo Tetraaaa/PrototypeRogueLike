@@ -24,7 +24,7 @@ public class FireStonePerk:Perk
         }
     }
 
-    public void OnHit(Enemy enemy)
+    public void OnHit(Enemy enemy, ProjectileDirection hitDirection)
     {
         enemy.debuffs.Add(new Burning(enemy));
     }

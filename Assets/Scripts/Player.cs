@@ -30,7 +30,7 @@ public class Player : Entity
 
     //Events
     public Action<GameTile> OnMove;
-    public Action<Enemy> OnHit;
+    public Action<Enemy, ProjectileDirection> OnHit;
     public Action OnLowHealth;
 
     public List<Perk> perks = new List<Perk>();
@@ -75,20 +75,23 @@ public class Player : Entity
     {
         if (turnEnded || isHoldingKey) return;
         GameTile targetTile = null;
+        ProjectileDirection movementDirection = ProjectileDirection.Left;
 
         if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0f)
         {
             isHoldingKey = true;
             targetTile = GameManager.Instance.GameBoard.Get(CurrentTile.x + (int)Input.GetAxisRaw("Horizontal"), CurrentTile.y);
+            if (Input.GetAxisRaw("Horizontal") > 0f) movementDirection = ProjectileDirection.Right;
         }
         else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0f)
         {
             isHoldingKey = true;    
             targetTile = GameManager.Instance.GameBoard.Get(CurrentTile.x , CurrentTile.y + (int)Input.GetAxisRaw("Vertical"));
+            movementDirection = ProjectileDirection.Down;
+            if (Input.GetAxisRaw("Vertical") > 0f) movementDirection = ProjectileDirection.Up;
         }
 
         if (targetTile == null) return;
-
 
         if (targetTile.entity)
         {
@@ -98,7 +101,7 @@ public class Player : Entity
             targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject);
             if(targetTile.entity != null)
             {
-                OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>());
+                OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
             }
             turnEnded = true;
         }
