@@ -13,7 +13,6 @@ public abstract class Enemy : Entity
     private int currentHp;
     protected int attack = 2;
     public List<string> logs = new List<string>();
-    private Color damageColor = new Color(255, 255, 255);
     public GameTile CurrentTile = null;
     public GameTile? playerPosition;
     public List<Debuff> debuffs = new List<Debuff>();
@@ -75,7 +74,7 @@ public abstract class Enemy : Entity
         }
     }
 
-    public bool TakeDamage(int damage, GameObject attacker, bool crits=false)
+    public bool TakeDamage(int damage, GameObject attacker, Color damageColor, bool crits=false)
     {
         this.currentHp -= damage;
         SoundManager.Instance.Hit();

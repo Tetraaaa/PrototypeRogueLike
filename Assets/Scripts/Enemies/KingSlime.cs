@@ -279,7 +279,7 @@ public class KingSlime : Enemy
         }
         else if(entity.GetComponent<Enemy>() != null)
         {
-            entity.GetComponent<Enemy>().TakeDamage((int)(attack * 0.2), gameObject);
+            entity.GetComponent<Enemy>().TakeDamage((int)(attack * 0.2), gameObject, Color.white);
         }
 
     }

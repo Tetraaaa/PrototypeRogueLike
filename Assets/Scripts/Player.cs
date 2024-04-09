@@ -109,17 +109,7 @@ public class Player : Entity
 
         if (targetTile.entity)
         {
-            OnBeforeHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
-            bool attackCrits = RNG.Get() <= CritChance;
-            int attackDamage = (int) (attack * attackMultiplier);
-            if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
-            bool enemyDies = targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject, attackCrits);
-            if(targetTile.entity != null)
-            {
-                OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
-            }
-            OnAfterHit?.Invoke(enemyDies, targetTile);
-            turnEnded = true;
+            Hit(targetTile.entity, targetTile, movementDirection);
         }
         else
         {
@@ -133,6 +123,21 @@ public class Player : Entity
         }
     }
 
+    public void Hit(GameObject entity, GameTile targetTile, ProjectileDirection hitDirection, float attackModifier = 1f)
+    {
+        OnBeforeHit?.Invoke(entity.GetComponent<Enemy>(), hitDirection);
+        bool attackCrits = RNG.Get() <= CritChance;
+        int attackDamage = (int)(attack * attackMultiplier * attackModifier);
+        if (attackCrits) attackDamage = (int)(attackDamage * critDamageMultiplier);
+        bool enemyDies = entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject, Color.white, attackCrits);
+        if (entity != null)
+        {
+            OnHit?.Invoke(entity.GetComponent<Enemy>(), hitDirection);
+        }
+        OnAfterHit?.Invoke(enemyDies, targetTile);
+        turnEnded = true;
+    }
+
     public void TakeDamage(int damage, Enemy hitBy)
     {
         bool playerDodged = UnityEngine.Random.Range(0f, 100f) <= dodgeChance;
@@ -144,7 +149,7 @@ public class Player : Entity
             if(playerParried)
             {
                 Destroy(dodgeText.gameObject);
-                hitBy.TakeDamage(PhysicalDamage + (int)(damage*0.2f), gameObject);
+                hitBy.TakeDamage(PhysicalDamage + (int)(damage*0.2f), gameObject, Color.white);
                 FloatingTextManager.Instance.ShowFloatingText(transform.position + Vector3.forward, "PARÉ !", Color.white);
             }
             return;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThunderFeetPerk:Perk
 {
     private int damage = 2;
+    private Color damageColor = new Color(51, 204, 255);
 
     public ThunderFeetPerk()
     {
@@ -31,7 +32,7 @@ public class ThunderFeetPerk:Perk
         foreach (GameTile neighbor in neighbors)
         {
             AnimationManager.Instance.ThunderFeet(neighbor.worldPos);
-            if (neighbor.entity) neighbor.entity.GetComponent<Enemy>().TakeDamage(damage, GameManager.Instance.Player.gameObject);
+            if (neighbor.entity) neighbor.entity.GetComponent<Enemy>().TakeDamage(damage, GameManager.Instance.Player.gameObject, damageColor);
         }
     }
 }

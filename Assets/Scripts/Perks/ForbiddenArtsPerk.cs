@@ -6,6 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class ForbiddenArtsPerk : Perk
 {
     private int explosionDamage = 4;
+    private Color damageColor = new Color(170,95,180);
     public ForbiddenArtsPerk()
     {
         this.rarity = PerkRarity.Uncommon;
@@ -35,7 +36,7 @@ public class ForbiddenArtsPerk : Perk
             {
                 if (neighbor.entity && neighbor.entity.GetComponent<Enemy>()!=null)
                 {
-                    neighbor.entity.GetComponent<Enemy>().TakeDamage(explosionDamage, GameManager.Instance.Player.gameObject);
+                    neighbor.entity.GetComponent<Enemy>().TakeDamage(explosionDamage, GameManager.Instance.Player.gameObject, damageColor);
                     damageDealt = true;
                 }
             }

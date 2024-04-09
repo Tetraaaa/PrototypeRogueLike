@@ -5,7 +5,6 @@ using UnityEngine;
 public class FloatingDamage : MonoBehaviour
 {
     private float durationLeft = 1f;
-    private float floatingSpeed = 1f;
     // Start is called before the first frame update
     void Start()
     {

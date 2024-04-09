@@ -33,7 +33,7 @@ public class GameManager : Singleton<GameManager>
 
         commonPerkPool = new List<Perk>() { new SmallSwordPerk(), new GlassEyePerk(), new SteakPerk(), new JudoBeltPerk(), new WoodenShieldPerk(), new SilexPerk() };
         uncommonPerkPool = new List<Perk>() { new FireStonePerk(), new EnergyDrinkPerk(), new BoxingGlovePerk(), new ForbiddenArtsPerk(), new ThunderFeetPerk() };
-        mythicPerkPool = new List<Perk>() { };
+        mythicPerkPool = new List<Perk>() { new CleaverPerk() };
         exoticPerkPool = new List<Perk>() { new ChalicePerk() };
         corruptedPerkPool = new List<Perk>() { new RiggedDicePerk(), new RustySwordPerk() };
     }

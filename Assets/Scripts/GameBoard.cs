@@ -66,6 +66,11 @@ public class GameBoard
         return tile;
     }
 
+    /// <summary>
+    /// Récupère les voisins directs : cases considérées comme "adjacentes".
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public List<GameTile> GetNeighbors(GameTile tile)
     {
         List<GameTile> neighbors = new List<GameTile>();
@@ -84,7 +89,11 @@ public class GameBoard
         neighbors.RemoveAll(x => !x.IsWalkable);
         return neighbors;
     }
-
+    /// <summary>
+    /// Récupère les voisins directs et voisins en diagonale : cases considérées comme "autour"
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <returns></returns>
     public List<GameTile> GetNeighborsAndDiagonals(GameTile tile)
     {
         List<GameTile> neighbors = GetNeighbors(tile);
@@ -95,6 +104,28 @@ public class GameBoard
         neighbors.RemoveAll(x => x == null);
         return neighbors;
     }
+    /// <summary>
+    /// Récupère les voisins directs, sauf la case située "derrière" : cases considérées à côté
+    /// </summary>
+    /// <param name="tile"></param>
+    /// <param name="direction"></param>
+    /// <returns></returns>
+    public List<GameTile> GetNextTo(GameTile tile, ProjectileDirection direction)
+    {
+        List<GameTile> tiles = new List<GameTile>();
+        if(direction == ProjectileDirection.Up || direction == ProjectileDirection.Down)
+        {
+            tiles.Add(Left(tile)); 
+            tiles.Add(Right(tile));
+        }
+        else
+        {
+            tiles.Add(Up(tile));
+            tiles.Add(Down(tile));
+        }
+        return tiles;
+    }
+
 
 
     public GameTile GetAdjacent(GameTile tile, ProjectileDirection direction)

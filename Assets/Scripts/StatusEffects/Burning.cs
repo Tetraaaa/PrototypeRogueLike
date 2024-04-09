@@ -6,6 +6,7 @@ public class Burning:Debuff
 {
     private Enemy target;
     private int damage = 1;
+    private Color damageColor = new Color(246, 152, 85);
 
     public Burning(Enemy target)
     {
@@ -18,7 +19,7 @@ public class Burning:Debuff
 
     public void OnTurnStart()
     {
-        target.TakeDamage(damage, GameManager.Instance.Player.gameObject);
+        target.TakeDamage(damage, GameManager.Instance.Player.gameObject, damageColor);
     }
 
     public void Remove()
