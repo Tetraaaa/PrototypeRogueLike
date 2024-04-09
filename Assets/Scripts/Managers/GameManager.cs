@@ -34,7 +34,7 @@ public class GameManager : Singleton<GameManager>
         uncommonPerkPool = new List<Perk>() { new FireStonePerk(), new EnergyDrinkPerk(), new BoxingGlovePerk(), new ForbiddenArtsPerk(), new ThunderFeetPerk() };
         mythicPerkPool = new List<Perk>() { };
         exoticPerkPool = new List<Perk>() { };
-        corruptedPerkPool = new List<Perk>() { new RiggedDicePerk() };
+        corruptedPerkPool = new List<Perk>() { new RiggedDicePerk(), new RustySwordPerk() };
     }
 
     public void SetPlayerStartingPos()

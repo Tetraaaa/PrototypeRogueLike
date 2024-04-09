@@ -26,6 +26,7 @@ public class Player : Entity
     public float dodgeChance = 0f;
     public float parryChance = 0f;
     public float critChance = 0f;
+    public float critChanceMultiplier = 1f;
     public float critDamageMultiplier = 1.5f;
 
     //Events
@@ -38,11 +39,19 @@ public class Player : Entity
 
     public List<Perk> perks = new List<Perk>();
 
-    public int physicalDamage
+    public int PhysicalDamage
     {
         get
         {
             return (int)(attack * attackMultiplier);
+        }
+    }
+
+    public float CritChance
+    {
+        get
+        {
+            return critChance * critChanceMultiplier;
         }
     }
 
@@ -99,7 +108,7 @@ public class Player : Entity
         if (targetTile.entity)
         {
             OnBeforeHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
-            bool attackCrits = RNG.Get() <= critChance;
+            bool attackCrits = RNG.Get() <= CritChance;
             int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
             bool enemyDies = targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject, attackCrits);
