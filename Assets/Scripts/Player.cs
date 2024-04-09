@@ -99,10 +99,10 @@ public class Player : Entity
         if (targetTile.entity)
         {
             OnBeforeHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);
-            bool attackCrits = UnityEngine.Random.Range(0f, 100f) <= critChance;
+            bool attackCrits = RNG.Get() <= critChance;
             int attackDamage = (int) (attack * attackMultiplier);
             if (attackCrits) attackDamage = (int)(attackDamage* critDamageMultiplier);
-            bool enemyDies = targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject);
+            bool enemyDies = targetTile.entity.GetComponent<Enemy>().TakeDamage(attackDamage, gameObject, attackCrits);
             if(targetTile.entity != null)
             {
                 OnHit?.Invoke(targetTile.entity.GetComponent<Enemy>(), movementDirection);

@@ -75,11 +75,11 @@ public abstract class Enemy : Entity
         }
     }
 
-    public bool TakeDamage(int damage, GameObject attacker)
+    public bool TakeDamage(int damage, GameObject attacker, bool crits=false)
     {
         this.currentHp -= damage;
         SoundManager.Instance.Hit();
-        FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor);
+        FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damage, damageColor, crits);
         GetComponent<ParticleSystem>().Play();
 
         if (currentHp <= 0)
