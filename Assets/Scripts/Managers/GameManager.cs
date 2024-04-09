@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GameManager : Singleton<GameManager>
@@ -33,7 +34,7 @@ public class GameManager : Singleton<GameManager>
         commonPerkPool = new List<Perk>() { new SmallSwordPerk(), new GlassEyePerk(), new SteakPerk(), new JudoBeltPerk(), new WoodenShieldPerk(), new SilexPerk() };
         uncommonPerkPool = new List<Perk>() { new FireStonePerk(), new EnergyDrinkPerk(), new BoxingGlovePerk(), new ForbiddenArtsPerk(), new ThunderFeetPerk() };
         mythicPerkPool = new List<Perk>() { };
-        exoticPerkPool = new List<Perk>() { };
+        exoticPerkPool = new List<Perk>() { new ChalicePerk() };
         corruptedPerkPool = new List<Perk>() { new RiggedDicePerk(), new RustySwordPerk() };
     }
 
@@ -83,10 +84,16 @@ public class GameManager : Singleton<GameManager>
                 tries++;
                 int itemIndex = Random.Range(0, pool.Count);
                 picked = pool[itemIndex];
-            } while (pickedPerks.Contains(picked) || (picked.isUnique && Player.perks.Contains(picked)) );
+            } while (pickedPerks.Contains(picked) || (picked.isUnique && Player.perks.Contains(picked)));
             pickedPerks.Add(picked);
         }
         UIManager.Instance.OpenPerksMenu(pickedPerks);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Start();
     }
 
 }

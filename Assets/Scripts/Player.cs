@@ -36,6 +36,7 @@ public class Player : Entity
     public Action<bool, GameTile> OnAfterHit;
 
     public Action OnLowHealth;
+    public Action OnDeath;
 
     public List<Perk> perks = new List<Perk>();
 
@@ -66,6 +67,7 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
+        if (currentHp <= 0) return;
         XCoordinate = Mathf.FloorToInt(transform.position.x);
         YCoordinate = Mathf.FloorToInt(transform.position.y);
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
@@ -142,7 +144,7 @@ public class Player : Entity
             if(playerParried)
             {
                 Destroy(dodgeText.gameObject);
-                hitBy.TakeDamage(physicalDamage + (int)(damage*0.2f), gameObject);
+                hitBy.TakeDamage(PhysicalDamage + (int)(damage*0.2f), gameObject);
                 FloatingTextManager.Instance.ShowFloatingText(transform.position + Vector3.forward, "PARÉ !", Color.white);
             }
             return;
@@ -153,12 +155,13 @@ public class Player : Entity
         SoundManager.Instance.Hit();
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, damageOnHp, damageColor);
         UIManager.Instance.UpdatePlayerHealth();
-        if (currentHp <= 0) Destroy(gameObject);
         if (!lowHealthThresholdReached && currentHp <= maxHP * 0.2)
         {
             OnLowHealth?.Invoke();
             lowHealthThresholdReached = true;
         }
+        if (currentHp <= 0) OnDeath?.Invoke();
+        if (currentHp <= 0) UIManager.Instance.GameOver();
     }
 
     public void GainExp(int xp)
@@ -181,6 +184,7 @@ public class Player : Entity
         if (currentHp > maxHP) currentHp = maxHP;
         if (lowHealthThresholdReached && currentHp > maxHP * 0.2) lowHealthThresholdReached = false;
         FloatingTextManager.Instance.ShowFloatingDamage(transform.position, hp, new Color32(0, 145, 10, 255));
+        UIManager.Instance.UpdatePlayerHealth();
     }
 
 }

@@ -9,6 +9,7 @@ public class UIManager : Singleton<UIManager>
     public HealthBar healthBar;
     public LevelCounter levelCounter;
     public GameObject shopPanel;
+    public GameObject gameOverPanel;
     public GameObject perksContainer;
     public GameObject PerkPrefab;
 
@@ -81,5 +82,10 @@ public class UIManager : Singleton<UIManager>
             Destroy(perkCard);
         }
         UpdatePlayerHealth();
+    }
+
+    public void GameOver()
+    {
+        gameOverPanel.SetActive(true);
     }
 }

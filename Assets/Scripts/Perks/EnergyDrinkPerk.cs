@@ -14,6 +14,7 @@ public class EnergyDrinkPerk : Perk
 
     public override void OnBuy(Player owner)
     {
+        this.owner = owner;
         owner.OnLowHealth += OnLowHealth;
     }
 
@@ -29,6 +30,7 @@ public class EnergyDrinkPerk : Perk
     public void OnLowHealth()
     {
         owner.Heal(Mathf.FloorToInt(owner.maxHP * healAmount));
+        owner.OnLowHealth -= OnLowHealth;
         owner.perks.Remove(this);
     }
 }
