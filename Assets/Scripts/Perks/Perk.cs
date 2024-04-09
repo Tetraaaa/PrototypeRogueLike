@@ -8,6 +8,7 @@ public abstract class Perk
     protected PerkRarity rarity;
     protected Player owner;
     public Sprite image;
+    public bool isUnique;
 
     public abstract void OnBuy(Player owner);
 

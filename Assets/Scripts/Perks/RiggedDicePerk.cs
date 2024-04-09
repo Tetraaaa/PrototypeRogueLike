@@ -9,6 +9,7 @@ public class RiggedDicePerk : Perk
     {
         this.rarity = PerkRarity.Corrupted;
         image = Resources.Load<Sprite>("Perks/rigged_dice");
+        isUnique = true;
     }
 
     public override void OnBuy(Player owner)

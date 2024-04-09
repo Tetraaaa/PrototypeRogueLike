@@ -83,7 +83,7 @@ public class GameManager : Singleton<GameManager>
                 tries++;
                 int itemIndex = Random.Range(0, pool.Count);
                 picked = pool[itemIndex];
-            } while (pickedPerks.Contains(picked));
+            } while (pickedPerks.Contains(picked) || (picked.isUnique && Player.perks.Contains(picked)) );
             pickedPerks.Add(picked);
         }
         UIManager.Instance.OpenPerksMenu(pickedPerks);
